@@ -8,9 +8,10 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('myCanvas');
+    initLevel();
     world = new World(canvas, keyboard);
 
-    console.log('My Character is', world.charactercharacter);
+    console.log('My Character is', world.character);
 
 }
 

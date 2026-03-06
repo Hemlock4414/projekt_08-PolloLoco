@@ -36,43 +36,40 @@ class Character extends MovableObject {
     animate() {
 
         setInterval( () => {
-            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world && this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
                 this.walking_sound.play();
             }
-            if(this.world.keyboard.LEFT && this.x > 0) {
+            
+            if(this.world && this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true; // Charakter schaut nach links durch Spiegeln
                 this.walking_sound.play();
             }
 
-            if(this.world.keyboard.UP && !this.isAboveGround()) {
+            if(this.world && this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
             }
 
-            this.world.camera_x = -this.x + 100; // Kamera folgt dem Charakter
+            if (this.world) {
+                this.world.camera_x = -this.x + 100;  // Kamera folgt dem Charakter
+            };
         }, 1000 / 60); // 60 fps
 
-        setInterval( () => {
-
-            if(this.isDead()) {
+        setInterval(() => {
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            }
 
-            else if(this.isHurt()) {
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            }
 
-            else if(this.isAboveGround() || this.speedY > 0) {
+            } else if (this.isAboveGround() || this.speedY > 0) {
                 this.playAnimation(this.IMAGES_JUMPING);
+                
             } else {
-
-                if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-
+                if (this.world && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                     this.playAnimation(this.IMAGES_WALKING);
-
-                    this.x += this.speed;
                 }
             }
         }, 1000 / 60);
