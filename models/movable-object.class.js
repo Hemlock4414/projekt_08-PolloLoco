@@ -63,6 +63,8 @@ class MovableObject extends DrawableObject {
         // Walking animation
         let index = this.currentImage % images.length; 
         // let index = 0 % 6; -> 0 Rest 0
+        // let index = 1 % 6; -> 0 Rest 1
+        // let index = 2 % 6; -> 0 Rest 2   
         // let index = 7 % 6; -> 1 Rest 1
         // index = 0, 1, 2, 3, 4, 5, 0
         // Endlosschleife entsteht
