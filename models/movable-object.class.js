@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
 
     applyGravity() {
         setInterval( () => {
-            if(this.y < 180) {
+            if(this.y < 180) {          // Höhe des Bodens, auf dem der Charakter steht
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -79,5 +79,9 @@ class MovableObject extends DrawableObject {
 
     moveLeft() {
         this.x -= this.speed;
+    }
+
+    jump() {
+        this.speedY = 30;
     }
 }
