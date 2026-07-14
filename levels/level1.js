@@ -22,7 +22,7 @@ function initLevel() {  // startet erst beim Drücken auf START
             new BackgroundObject('img/background-far-1.png', 0),
             new BackgroundObject('img/background-mid-2.png', 0),
             new BackgroundObject('img/background-close-1.png', 0),
-            new BackgroundObject('img/background-sky.png', 719),
+            new BackgroundObject('img/background-sky.png', 719), // 1 Pixel weniger, damit die Bilder nahtlos aneinander anschließen
             new BackgroundObject('img/background-far-2.png', 720),
             new BackgroundObject('img/background-mid-2.png', 720),
             new BackgroundObject('img/background-close-2.png', 720),

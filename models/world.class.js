@@ -3,9 +3,9 @@ class World {
     character = new Character();
 
     level = level1;
-    enemies = level1.enemies;
-    clouds = level1.clouds;
-    backgroundObjects = level1.backgroundObjects;
+    // enemies = level1.enemies;
+    // clouds = level1.clouds;
+    // backgroundObjects = level1.backgroundObjects;
 
     canvas;
     ctx;
@@ -57,7 +57,8 @@ class World {
         // mit dieser Zeile wird der Canvas immer wieder geleert bevor neu gezeichnet wird
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.translate(this.camera_x, 0); // Kamera folgt dem Charakter indem der Canvas verschoben wird
+        // Kamera folgt dem Charakter indem der Canvas verschoben wird
+        this.ctx.translate(this.camera_x, 0); // Y-Achse bleibt unverändert, da die Kamera nur horizontal folgt
 
         this.addObjectsToMap(this.level.backgroundObjects);
         // this.backgroundObjects.forEach((bgo) => {

@@ -53,7 +53,7 @@ class Character extends MovableObject {
             }
 
             if (this.world) {
-                this.world.camera_x = -this.x + 100;  // Kamera folgt dem Charakter
+                this.world.camera_x = -this.x + 100;  // Kamera folgt dem Charakter, sodass er immer 100 Pixel vom linken Rand entfernt ist
             };
         }, 1000 / 60); // 60 fps
 
