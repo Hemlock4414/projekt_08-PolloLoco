@@ -31,7 +31,7 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height;
     }
 
-// Alternative mit Offset
+// Alternative mit Offset (Offset ist hier ein Wert, der die Kollisionsbox verkleinert, damit der Charakter nicht schon bei einer leichten Berührung getroffen wird)
 //     isColliding(mo) {
 //     return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
 //         this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -39,12 +39,18 @@ class MovableObject extends DrawableObject {
 //         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
 // }
 
+// ursprüngliche Kollisionsmethode
+// if (character.x + character.width > enemy.x &&
+//     character.y + character.height > enemy.y &&
+//     character.x < enemy.x &&
+//     character.y < enemy.y + enemy.height)
+
     hit() {
         this.energy -= 5;
         if(this.energy < 0) {
             this.energy = 0;
         } else {
-            this.lastHit = new Date().getTime();
+            this.lastHit = new Date().getTime(); // so speichert man Zeit in Zahlenformat ms seit 1970
         }
     }
 
@@ -54,8 +60,8 @@ class MovableObject extends DrawableObject {
 
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // Differenz in ms
-        timePassed = timePassed / 1000; // in Sekunden
-        return timePassed < 1; // Ist das Objekt in den letzten 5 Sekunden getroffen worden?    
+        timePassed = timePassed / 1000; // Differenz in Sekunden
+        return timePassed < 1; // Ist das Objekt in den letzten 1 Sekunden getroffen worden?    
     }
 
     playAnimation(images) {
