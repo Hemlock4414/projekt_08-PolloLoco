@@ -13,28 +13,28 @@ function initLevel() {  // startet erst beim Drücken auf START
             new Cloud()
         ],
         [
-            new BackgroundObject('img/background-sky.png', -719),
-            new BackgroundObject('img/background-far-1.png', -720),
-            new BackgroundObject('img/background-mid-2.png', -720),
-            new BackgroundObject('img/background-close-1.png', -720),
+            new BackgroundObject('img/5_background/layers/air.png', -719),
+            new BackgroundObject('img/5_background/layers/3_third_layer/1.png', -720),
+            new BackgroundObject('img/5_background/layers/2_second_layer/1.png', -720),
+            new BackgroundObject('img/5_background/layers/1_first_layer/1.png', -720),
 
-            new BackgroundObject('img/background-sky.png', 0),
-            new BackgroundObject('img/background-far-1.png', 0),
-            new BackgroundObject('img/background-mid-2.png', 0),
-            new BackgroundObject('img/background-close-1.png', 0),
-            new BackgroundObject('img/background-sky.png', 719), // 1 Pixel weniger, damit die Bilder nahtlos aneinander anschließen
-            new BackgroundObject('img/background-far-2.png', 720),
-            new BackgroundObject('img/background-mid-2.png', 720),
-            new BackgroundObject('img/background-close-2.png', 720),
+            new BackgroundObject('img/5_background/layers/air.png', 0),
+            new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 0),
+            new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 0),
+            new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 0),
+            new BackgroundObject('img/5_background/layers/air.png', 719), // 1 Pixel weniger, damit die Bilder nahtlos aneinander anschließen
+            new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 720),
+            new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 720),
+            new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 720),
 
-            new BackgroundObject('img/background-sky.png', 719*2),
-            new BackgroundObject('img/background-far-1.png', 720*2),
-            new BackgroundObject('img/background-mid-2.png', 720*2),
-            new BackgroundObject('img/background-close-1.png', 720*2),
-            new BackgroundObject('img/background-sky.png', 719*3),
-            new BackgroundObject('img/background-far-2.png', 720*3),
-            new BackgroundObject('img/background-mid-2.png', 720*3),
-            new BackgroundObject('img/background-close-2.png', 720*3)
+            new BackgroundObject('img/5_background/layers/air.png', 719*2),
+            new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 720*2),
+            new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 720*2),
+            new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 720*2),
+            new BackgroundObject('img/5_background/layers/air.png', 719*3),
+            new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 720*3),
+            new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 720*3),
+            new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 720*3)
         ]
     );
 }
