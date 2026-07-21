@@ -11,7 +11,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
+    // statusBar = new StatusBar();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -47,7 +47,7 @@ class World {
                 this.character.hit();
                 // this.character.energy -= 5; // wird ersetzt durch this.character.hit();
                 console.log('Collision with Character ', enemy, 'HP ', this.character.energy);
-                this.statusBar.setPercentage(this.character.energy);
+                // this.statusBar.setPercentage(this.character.energy);
             }
         });
     }
@@ -74,7 +74,7 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);  // Rückgängigmachen der Kameraverschiebung
         // Fixed Objects wie Statusleiste zeichnen
-        this.addToMap(this.statusBar);          // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
+        // this.addToMap(this.statusBar);          // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
         this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
 
         this.addToMap(this.character);
