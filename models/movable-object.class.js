@@ -13,7 +13,7 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 25);
+        }, 1000 / 60);
     }
 
     isAboveGround() {
@@ -46,11 +46,14 @@ class MovableObject extends DrawableObject {
 //     character.y < enemy.y + enemy.height)
 
     hit() {
-        this.energy -= 5;
-        if(this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime(); // so speichert man Zeit in Zahlenformat ms seit 1970
+        let timePassed = new Date().getTime() - this.lastHit;
+        timePassed = timePassed / 1000;
+        if (timePassed > 1) {  // nur alle 1 Sekunde Schaden nehmen
+            this.energy -= 5;
+            if(this.energy < 0) {
+                this.energy = 0;
+            }
+            this.lastHit = new Date().getTime();
         }
     }
 
@@ -67,6 +70,8 @@ class MovableObject extends DrawableObject {
     playAnimation(images) {
 
         // Walking animation
+        this.animationCounter = (this.animationCounter || 0) + 1;
+        if (this.animationCounter % 20 !== 0) return; // nur jeden 6. Tick ein neues Bild (höhere Zahl = langsamer)
         let index = this.currentImage % images.length; 
         // let index = 0 % 6; -> 0 Rest 0
         // let index = 1 % 6; -> 0 Rest 1

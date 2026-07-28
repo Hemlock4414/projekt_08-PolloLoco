@@ -1,7 +1,8 @@
 class Character extends MovableObject {
 
     height = 280;
-    y = 155;
+    y = 180;
+    x = 0;
     world;
 
     // walking_sound = new Audio('audio/walking.mp3');
@@ -122,7 +123,7 @@ class Character extends MovableObject {
                     this.lastMoveTime = Date.now(); // lastMoveTime wird nur bei Bewegung aktualisiert
                 } else {
                     let idleTime = Date.now() - this.lastMoveTime;
-                    if (idleTime > 5000) {
+                    if (idleTime > 15000) {
                         this.playAnimation(this.IMAGES_IDLE_LONG);
                     } else {
                         this.playAnimation(this.IMAGES_IDLE_SHORT);
