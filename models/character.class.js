@@ -78,6 +78,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE_SHORT);
         this.loadImages(this.IMAGES_IDLE_LONG);
         this.applyGravity();
+        this.lastMoveTime = Date.now();
         this.animate();
     }
 
@@ -87,13 +88,13 @@ class Character extends MovableObject {
             if (this.world && this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                // this.walking_sound.play();
             }
             
             if(this.world && this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true; // Charakter schaut nach links durch Spiegeln
-                this.walking_sound.play();
+                // this.walking_sound.play();
             }
 
             if(this.world && this.world.keyboard.UP && !this.isAboveGround()) {
@@ -118,6 +119,14 @@ class Character extends MovableObject {
             } else {
                 if (this.world && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                     this.playAnimation(this.IMAGES_WALKING);
+                    this.lastMoveTime = Date.now(); // lastMoveTime wird nur bei Bewegung aktualisiert
+                } else {
+                    let idleTime = Date.now() - this.lastMoveTime;
+                    if (idleTime > 5000) {
+                        this.playAnimation(this.IMAGES_IDLE_LONG);
+                    } else {
+                        this.playAnimation(this.IMAGES_IDLE_SHORT);
+                    }
                 }
             }
         }, 1000 / 60);
