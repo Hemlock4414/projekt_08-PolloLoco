@@ -9,9 +9,13 @@ class MovableObject extends DrawableObject {
 
     applyGravity() {
         setInterval( () => {
-            if(this.y < 180) {          // Höhe des Bodens, auf dem der Charakter steht
+            if (this.y < 160 || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+                if (this.y > 160) {      // Höhe des Bodens, auf dem der Charakter steht
+                    this.y = 160;
+                    this.speedY = 0;
+                }
             }
         }, 1000 / 60);
     }
@@ -20,7 +24,7 @@ class MovableObject extends DrawableObject {
         if(this instanceof ThrowableObject) {   // throwable objects sollen immer fallen
             return true;
         }    else {
-        return this.y < 180;
+        return this.y < 160;
         }
     }
 
@@ -71,7 +75,7 @@ class MovableObject extends DrawableObject {
 
         // Walking animation
         this.animationCounter = (this.animationCounter || 0) + 1;
-        if (this.animationCounter % 20 !== 0) return; // nur jeden 6. Tick ein neues Bild (höhere Zahl = langsamer)
+        if (this.animationCounter % 6 !== 0) return; // nur jeden 6. Tick ein neues Bild (höhere Zahl = langsamer)
         let index = this.currentImage % images.length; 
         // let index = 0 % 6; -> 0 Rest 0
         // let index = 1 % 6; -> 0 Rest 1
@@ -93,6 +97,6 @@ class MovableObject extends DrawableObject {
     }
 
     jump() {
-        this.speedY = 30;
+        this.speedY = 22;
     }
 }
