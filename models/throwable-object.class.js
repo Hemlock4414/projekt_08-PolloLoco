@@ -16,16 +16,11 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
 
-    IMAGES_GROUND = [
-        'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
-    ]
-
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
 
         this.loadImages(this.IMAGES_ROTATION);
         this.loadImages(this.IMAGES_SPLASH);
-        this.loadImages(this.IMAGES_GROUND);
 
         this.x = x;
         this.y = y;
