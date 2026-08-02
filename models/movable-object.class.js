@@ -28,7 +28,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    // grundsätzlich symmetrisch machen (betrifft alle Objekte, nicht nur den Boss – für jede Annäherung von links):
+    // grundsätzlich symmetrisch machen (betrifft alle Objekte für jede Annäherung von links):
     isColliding(mo) {
         return this.x + this.width > mo.x &&
             this.x < mo.x + mo.width &&
@@ -36,6 +36,7 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height;
     }
 
+    // Standard-Kollisionsmethode
     // isColliding(mo) {
     //     return this.x + this.width > mo.x &&
     //         this.y + this.height > mo.y &&
@@ -43,19 +44,19 @@ class MovableObject extends DrawableObject {
     //         this.y < mo.y + mo.height;
     // }
 
-// Alternative mit Offset (Offset ist hier ein Wert, der die Kollisionsbox verkleinert, damit der Charakter nicht schon bei einer leichten Berührung getroffen wird)
-//     isColliding(mo) {
-//     return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-//         this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-//         this.x + this.offset.left < mo.x - mo.offset.right &&
-//         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
-// }
+    // Alternative mit Offset (Offset ist hier ein Wert, der die Kollisionsbox verkleinert, damit der Charakter nicht schon bei einer leichten Berührung getroffen wird)
+    //     isColliding(mo) {
+    //     return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+    //         this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+    //         this.x + this.offset.left < mo.x - mo.offset.right &&
+    //         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    // }
 
-// ursprüngliche Kollisionsmethode
-// if (character.x + character.width > enemy.x &&
-//     character.y + character.height > enemy.y &&
-//     character.x < enemy.x &&
-//     character.y < enemy.y + enemy.height)
+    // ursprüngliche Kollisionsmethode
+    // if (character.x + character.width > enemy.x &&
+    //     character.y + character.height > enemy.y &&
+    //     character.x < enemy.x &&
+    //     character.y < enemy.y + enemy.height)
 
     hit() {
         let timePassed = new Date().getTime() - this.lastHit;
