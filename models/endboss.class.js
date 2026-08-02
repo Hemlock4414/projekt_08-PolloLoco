@@ -5,7 +5,7 @@ class Endboss extends MovableObject {
     y = 60;
     energy = 100;
 
-    speed = 5;
+    speed = 1;
     alertRange = 500;    // Abstand, ab dem der Boss den Character bemerkt
     attackRange = 120;   // Abstand, ab dem der Boss angreift statt zu laufen
 
@@ -72,9 +72,14 @@ class Endboss extends MovableObject {
 
             if (!this.isAlerted) {
                 this.checkAlert();
-            } else if (this.isMoving && !this.isHurt() && !this.isInAttackRange()) {
-                this.moveLeft();
-                this.otherDirection = true; // Boss schaut nach links, zum Character hin
+            } else if (this.isMoving && !this.isHurt()) {
+                if (this.world.character.x < this.x) {
+                    this.moveLeft();
+                    this.otherDirection = false;
+                } else {
+                    this.moveRight();
+                    this.otherDirection = true;
+                }
             }
         }, 1000 / 60);
 
