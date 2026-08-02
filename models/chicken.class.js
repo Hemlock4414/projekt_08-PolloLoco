@@ -3,7 +3,6 @@ class Chicken extends MovableObject {
     y = 330;
     height = 100;
     width = 120;
-    
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -13,6 +12,8 @@ class Chicken extends MovableObject {
     IMAGES_DEAD = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
+
+    hasDied = false; // verhindert, dass das Entfernen mehrfach ausgelöst wird
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
@@ -27,13 +28,31 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        setInterval( () => {    
+        setInterval(() => {
+            if (this.isDead()) return; // totes Chicken bewegt sich nicht mehr
             this.moveLeft();
         }, 1000 / 60); // 60 fps
 
-        setInterval( () => {
-
-            this.playAnimation(this.IMAGES_WALKING);
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playDeadAnimation();
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 100);
+    }
+
+    // Zeigt einmalig das Dead-Bild und entfernt das Chicken nach 1 Sekunde aus dem Level
+    playDeadAnimation() {
+        if (this.hasDied) return;
+        this.hasDied = true;
+        this.img = this.imageCache[this.IMAGES_DEAD[0]];
+
+        setTimeout(() => {
+            let index = this.world.level.enemies.indexOf(this);
+            if (index > -1) {
+                this.world.level.enemies.splice(index, 1);
+            }
+        }, 1000);
     }
 }
