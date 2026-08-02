@@ -37,9 +37,13 @@ function initLevel() {  // startet erst beim Drücken auf START
             new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719*3),
             new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719*3)
         ],
-            [ new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle(),
-            new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle() ], // 10 Flaschen
-            [ new Coin(), new Coin(), new Coin(), new Coin(), new Coin(),
-            new Coin(), new Coin(), new Coin(), new Coin(), new Coin() ]           // 10 Münzen
+        [ 
+            new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle(),
+            new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle() 
+        ], // 10 Flaschen
+        // [ 
+        //     new Coin(), new Coin(), new Coin(), new Coin(), new Coin(),
+        //     new Coin(), new Coin(), new Coin(), new Coin(), new Coin() 
+        // ]  // 10 Münzen
     );
 }
