@@ -48,6 +48,7 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (!this.character.isColliding(enemy)) return;
+            if (enemy.isDead()) return; // tote Gegner fügen keinen Schaden mehr zu
 
             if (enemy instanceof Endboss) {
                 this.character.hit();
