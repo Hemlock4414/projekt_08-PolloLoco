@@ -132,4 +132,11 @@ class Character extends MovableObject {
             }
         }, 1000 / 60);
     }
+
+    // Prüft, ob der Character von oben auf einen Gegner fällt (Sprung-Treffer)
+    isStomping(enemy) {
+        let characterBottom = this.y + this.height;
+        let enemyTop = enemy.y;
+        return this.speedY < 0 && characterBottom < enemyTop + (enemy.height / 3);
+    }
 }
