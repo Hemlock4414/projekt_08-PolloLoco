@@ -35,7 +35,7 @@ class World {
             this.checkThrowObjects();
             this.checkThrowableCollisions();
             this.checkGameStatus();
-        }, 1000 / 25);
+        }, 1000 / 60);
     }
 
     checkThrowObjects() {
