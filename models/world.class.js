@@ -13,6 +13,7 @@ class World {
     camera_x = 0;
     // statusBar = new StatusBar();
     throwableObjects = [];
+    gameWon = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -25,12 +26,15 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach(enemy => enemy.world = this);
     }
 
     run() {
-        setInterval(() => {
+        this.runInterval = setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkThrowableCollisions();
+            this.checkGameStatus();
         }, 1000 / 25);
     }
 
@@ -50,6 +54,29 @@ class World {
                 // this.statusBar.setPercentage(this.character.energy);
             }
         });
+    }
+
+    // Prüft, ob eine geworfene Flasche einen Gegner trifft (fehlte bisher komplett)
+    checkThrowableCollisions() {
+        this.throwableObjects.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy) && !enemy.isDead()) {
+                    enemy.hit();
+                    bottle.hasHit = true; // zum Entfernen markieren
+                }
+            });
+        });
+        this.throwableObjects = this.throwableObjects.filter(bottle => !bottle.hasHit);
+    }
+
+    // Prüft, ob der Endboss besiegt wurde
+    checkGameStatus() {
+        if (this.gameWon) return;
+        let endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+        if (endboss && endboss.isDead()) {
+            this.gameWon = true;
+            clearInterval(this.runInterval);
+        }
     }
 
     // Draw() wird immer wieder aufgerufen um den Canvas zu aktualisieren circa alle 16ms
@@ -93,6 +120,11 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // Rückgängigmachen der Kameraverschiebung
 
         let self = this;    
+
+        if (this.gameWon) {
+            this.drawWinScreen();
+        }
+
         requestAnimationFrame(function() {
             self.draw();
         });
@@ -137,5 +169,15 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    drawWinScreen() {
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = '48px sans-serif';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('DU HAST GEWONNEN!', this.canvas.width / 2, this.canvas.height / 2);
     }
 }
