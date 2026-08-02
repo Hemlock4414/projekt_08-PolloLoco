@@ -35,7 +35,7 @@ class World {
             this.checkThrowObjects();
             this.checkThrowableCollisions();
             this.checkGameStatus();
-        }, 1000 / 25);
+        }, 1000 / 60);
     }
 
     checkThrowObjects() {
@@ -47,9 +47,16 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if( this.character.isColliding(enemy) ) {
+            if (!this.character.isColliding(enemy)) return;
+            if (enemy.isDead()) return; // tote Gegner fügen keinen Schaden mehr zu
+
+            if (enemy instanceof Endboss) {
                 this.character.hit();
                 // this.character.energy -= 5; // wird ersetzt durch this.character.hit();
+            } else if (this.character.isStomping(enemy)) {
+                enemy.energy = 0;                           // sofort besiegt
+            } else {
+                this.character.hit();
                 console.log('Collision with Character ', enemy, 'HP ', this.character.energy);
                 // this.statusBar.setPercentage(this.character.energy);
             }
