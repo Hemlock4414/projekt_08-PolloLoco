@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
 
     speed = 1;
     alertRange = 500;    // Abstand, ab dem der Boss den Character bemerkt
-    attackRange = 120;   // Abstand, ab dem der Boss angreift statt zu laufen
+    attackRange = 180;   // Abstand, ab dem der Boss angreift statt zu laufen
 
     isAlerted = false;   // wurde der Boss schon "geweckt"?
     isMoving = false;    // läuft der Boss gerade auf den Character zu?
