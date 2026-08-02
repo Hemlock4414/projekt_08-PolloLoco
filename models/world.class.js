@@ -37,14 +37,16 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkThrowableCollisions();
+            this.checkCollectableCollisions()
             this.checkGameStatus();
         }, 1000 / 60);
     }
 
     checkThrowObjects() {
-        if(this.keyboard.SPACE) {
+        if (this.keyboard.SPACE && this.collectedBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.collectedBottles--;
         }
     }
 
