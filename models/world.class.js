@@ -15,6 +15,9 @@ class World {
     throwableObjects = [];
     gameWon = false;
 
+    collectedBottles = 0;
+    collectedCoins = 0;
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -74,6 +77,24 @@ class World {
             });
         });
         this.throwableObjects = this.throwableObjects.filter(bottle => !bottle.hasHit);
+    }
+
+    checkCollectableCollisions() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.collectedBottles++;
+                bottle.collected = true;
+            }
+        });
+        this.level.bottles = this.level.bottles.filter(bottle => !bottle.collected);
+
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.collectedCoins++;
+                coin.collected = true;
+            }
+        });
+        this.level.coins = this.level.coins.filter(coin => !coin.collected);
     }
 
     // Prüft, ob der Endboss besiegt wurde
