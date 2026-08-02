@@ -28,12 +28,20 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    // grundsätzlich symmetrisch machen (betrifft alle Objekte, nicht nur den Boss – für jede Annäherung von links):
     isColliding(mo) {
         return this.x + this.width > mo.x &&
+            this.x < mo.x + mo.width &&
             this.y + this.height > mo.y &&
-            this.x < mo.x &&
             this.y < mo.y + mo.height;
     }
+
+    // isColliding(mo) {
+    //     return this.x + this.width > mo.x &&
+    //         this.y + this.height > mo.y &&
+    //         this.x < mo.x &&
+    //         this.y < mo.y + mo.height;
+    // }
 
 // Alternative mit Offset (Offset ist hier ein Wert, der die Kollisionsbox verkleinert, damit der Charakter nicht schon bei einer leichten Berührung getroffen wird)
 //     isColliding(mo) {
