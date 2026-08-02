@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
 
     speed = 1;
     alertRange = 500;    // Abstand, ab dem der Boss den Character bemerkt
-    attackRange = 180;   // Abstand, ab dem der Boss angreift statt zu laufen
+    attackRange = 200;   // Abstand, ab dem der Boss angreift statt zu laufen
 
     isAlerted = false;   // wurde der Boss schon "geweckt"?
     isMoving = false;    // läuft der Boss gerade auf den Character zu?
@@ -72,7 +72,7 @@ class Endboss extends MovableObject {
 
             if (!this.isAlerted) {
                 this.checkAlert();
-            } else if (this.isMoving && !this.isHurt()) {
+            } else if (this.isMoving && !this.isHurt() && !this.isTouchingCharacter()) {
                 if (this.world.character.x < this.x) {
                     this.moveLeft();
                     this.otherDirection = false;
@@ -124,6 +124,25 @@ class Endboss extends MovableObject {
 
     isInAttackRange() {
         if (!this.world) return false;
-        return Math.abs(this.x - this.world.character.x) < this.attackRange;
+        let character = this.world.character;
+        let distance;
+        if (this.x < character.x) {
+            // Boss kommt von links: Abstand rechter Boss-Rahmen -> linker Character-Rahmen
+            distance = character.x - (this.x + this.width);
+        } else {
+            // Boss kommt von rechts: Abstand linker Boss-Rahmen -> rechter Character-Rahmen
+            distance = this.x - (character.x + character.width);
+        }
+        return distance < this.attackRange;
+    }
+
+    // Prüft echten Rahmen-Kontakt mit dem Character, unabhängig von der Anlaufrichtung
+    isTouchingCharacter() {
+        let character = this.world.character;
+        return this.x < character.x + character.width &&
+            this.x + this.width > character.x &&
+            this.y < character.y + character.height &&
+            this.y + this.height > character.y;
     }
 }
+
