@@ -12,7 +12,7 @@ class MovableObject extends DrawableObject {
             if (this.y < 160 || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-                if (this.y > 160) {      // Höhe des Bodens, auf dem der Charakter steht
+                if (this.y > 160) {      // Höhe des Bodens auf dem der Charakter steht
                     this.y = 160;
                     this.speedY = 0;
                 }
