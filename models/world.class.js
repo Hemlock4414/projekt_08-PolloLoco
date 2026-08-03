@@ -43,10 +43,14 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.SPACE && this.collectedBottles > 0) {
+        if (this.keyboard.SPACE && this.collectedBottles > 0 && !this.throwCooldown) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
+            this.throwCooldown = true;
+        }
+        if (!this.keyboard.SPACE) {
+            this.throwCooldown = false;
         }
     }
 
