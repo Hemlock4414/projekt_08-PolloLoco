@@ -1,5 +1,8 @@
 class ThrowableObject extends MovableObject {
 
+    isSplashing = false;
+    hasHit = false;
+
     IMAGES_ROTATION = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -16,9 +19,6 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
 
-    isSplashing = false;
-    hasHit = false;
-
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
 
@@ -29,9 +29,15 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
+        this.groundY = 340; // gleiche Bodenhöhe wie die liegende Flasche
 
         this.throw();
         this.animate();
+    }
+
+    onGroundHit() {
+        // Flasche ist am Boden aufgeschlagen, ohne Gegner getroffen zu haben
+        this.playSplash(() => { this.hasHit = true; });
     }
 
     throw() {
