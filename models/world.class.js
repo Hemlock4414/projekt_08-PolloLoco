@@ -75,13 +75,18 @@ class World {
     // Prüft, ob eine geworfene Flasche einen Gegner trifft (fehlte bisher komplett)
     checkThrowableCollisions() {
         this.throwableObjects.forEach((bottle) => {
+            if (bottle.isSplashing) return; // steckt schon in der Splash-Animation, nicht nochmal treffen
+
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && !enemy.isDead()) {
                     enemy.hit();
-                    bottle.hasHit = true; // zum Entfernen markieren
+                    bottle.playSplash(() => {
+                        bottle.hasHit = true; // erst NACH der Animation zum Entfernen markieren
+                    });
                 }
             });
         });
+
         this.throwableObjects = this.throwableObjects.filter(bottle => !bottle.hasHit);
     }
 
