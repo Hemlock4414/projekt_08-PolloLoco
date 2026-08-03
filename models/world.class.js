@@ -90,13 +90,13 @@ class World {
         });
         this.level.bottles = this.level.bottles.filter(bottle => !bottle.collected);
 
-        this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                this.collectedCoins++;
-                coin.collected = true;
-            }
-        });
-        this.level.coins = this.level.coins.filter(coin => !coin.collected);
+        // this.level.coins.forEach((coin) => {
+        //     if (this.character.isColliding(coin)) {
+        //         this.collectedCoins++;
+        //         coin.collected = true;
+        //     }
+        // });
+        // this.level.coins = this.level.coins.filter(coin => !coin.collected);
     }
 
     // Prüft, ob der Endboss besiegt wurde
@@ -149,7 +149,7 @@ class World {
 
         this.addObjectsToMap(this.level.bottles);
 
-        this.addObjectsToMap(this.level.coins);
+        // this.addObjectsToMap(this.level.coins);
 
         this.ctx.translate(-this.camera_x, 0); // Rückgängigmachen der Kameraverschiebung
 

@@ -1,6 +1,6 @@
 class Bottle extends CollidableObject {
 
-    y = 340;   // Bodenposition, analog zur Boden-Flasche in throwable-object.class.js
+    y = 360;   // Bodenposition, analog zur Boden-Flasche in throwable-object.class.js
     height = 70;
     width = 60;
 
