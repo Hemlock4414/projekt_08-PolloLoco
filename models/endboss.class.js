@@ -5,7 +5,7 @@ class Endboss extends MovableObject {
     y = 60;
     energy = 100;
 
-    speed = 2;
+    speed = 3;
     alertRange = 500;    // Abstand, ab dem der Boss den Character bemerkt
     attackRange = 250;   // Abstand, ab dem der Boss angreift statt zu laufen
 
