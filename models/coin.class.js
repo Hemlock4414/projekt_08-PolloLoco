@@ -4,6 +4,13 @@ class Coin extends CollidableObject {
 
     width = 120;
 
+    offset = {
+        top: 40,
+        bottom: 40,
+        left: 30,
+        right: 30
+    };
+
     IMAGES = [
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png'

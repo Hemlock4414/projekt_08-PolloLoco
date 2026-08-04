@@ -5,6 +5,13 @@ class Character extends MovableObject {
     x = 0;
     world;
 
+    offset = {
+        top: 120,
+        bottom: 0,
+        left: 0,
+        right: 0
+    };
+
     // walking_sound = new Audio('audio/walking.mp3');
 
     IMAGES_WALKING = [
