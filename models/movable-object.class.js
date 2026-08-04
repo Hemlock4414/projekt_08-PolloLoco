@@ -6,26 +6,28 @@ class MovableObject extends DrawableObject {
     acceleration = 1;
     energy = 100;
     lastHit = 0;
+    groundY = 160; // Standard-Boden
 
     applyGravity() {
         setInterval( () => {
-            if (this.y < 160 || this.speedY > 0) {
+            if (this.y < this.groundY || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-                if (this.y > 160) {      // Höhe des Bodens auf dem der Charakter steht
-                    this.y = 160;
+                if (this.y > this.groundY) {
+                    this.y = this.groundY;
                     this.speedY = 0;
+                    this.onGroundHit(); // Hook für Aufprall-Verhalten (z. B. Splash)
                 }
             }
         }, 1000 / 60);
     }
 
+    onGroundHit() {
+        // Default: nichts. Subklassen können überschreiben.
+    }
+
     isAboveGround() {
-        if(this instanceof ThrowableObject) {   // throwable objects sollen immer fallen
-            return true;
-        }    else {
         return this.y < 160;
-        }
     }
 
     // grundsätzlich symmetrisch machen (betrifft alle Objekte für jede Annäherung von links):

@@ -43,10 +43,16 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.SPACE && this.collectedBottles > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        if (this.keyboard.SPACE && this.collectedBottles > 0 && !this.throwCooldown) {
+            let direction = this.character.otherDirection ? 'left' : 'right';
+            let offsetX = this.character.otherDirection ? -30 : 100;
+            let bottle = new ThrowableObject(this.character.x + offsetX, this.character.y + 100, direction);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
+            this.throwCooldown = true;
+        }
+        if (!this.keyboard.SPACE) {
+            this.throwCooldown = false;
         }
     }
 
@@ -71,13 +77,18 @@ class World {
     // Prüft, ob eine geworfene Flasche einen Gegner trifft (fehlte bisher komplett)
     checkThrowableCollisions() {
         this.throwableObjects.forEach((bottle) => {
+            if (bottle.isSplashing) return; // steckt schon in der Splash-Animation, nicht nochmal treffen
+
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && !enemy.isDead()) {
                     enemy.hit();
-                    bottle.hasHit = true; // zum Entfernen markieren
+                    bottle.playSplash(() => {
+                        bottle.hasHit = true; // erst NACH der Animation zum Entfernen markieren
+                    });
                 }
             });
         });
+
         this.throwableObjects = this.throwableObjects.filter(bottle => !bottle.hasHit);
     }
 
@@ -90,13 +101,13 @@ class World {
         });
         this.level.bottles = this.level.bottles.filter(bottle => !bottle.collected);
 
-        this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                this.collectedCoins++;
-                coin.collected = true;
-            }
-        });
-        this.level.coins = this.level.coins.filter(coin => !coin.collected);
+        // this.level.coins.forEach((coin) => {
+        //     if (this.character.isColliding(coin)) {
+        //         this.collectedCoins++;
+        //         coin.collected = true;
+        //     }
+        // });
+        // this.level.coins = this.level.coins.filter(coin => !coin.collected);
     }
 
     // Prüft, ob der Endboss besiegt wurde
@@ -149,7 +160,7 @@ class World {
 
         this.addObjectsToMap(this.level.bottles);
 
-        this.addObjectsToMap(this.level.coins);
+        // this.addObjectsToMap(this.level.coins);
 
         this.ctx.translate(-this.camera_x, 0); // Rückgängigmachen der Kameraverschiebung
 

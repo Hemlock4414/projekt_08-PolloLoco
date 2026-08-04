@@ -15,6 +15,10 @@ class Chicken extends MovableObject {
 
     hasDied = false; // verhindert, dass das Entfernen mehrfach ausgelöst wird
 
+    hit() {
+        this.energy = 0;
+    }
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
 
