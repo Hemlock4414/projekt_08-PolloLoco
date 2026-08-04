@@ -41,11 +41,11 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 30;
+        this.speedY = 20;   // initiale Wurfgeschwindigkeit nach oben
         this.applyGravity();
         this.throwInterval = setInterval(() => {
             if (!this.isSplashing) {
-                this.x += 10;
+                this.x += 10;   // horizontale Geschwindigkeit nach rechts
             }
         }, 25);
     }
