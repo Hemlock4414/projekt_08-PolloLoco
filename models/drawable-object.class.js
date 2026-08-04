@@ -25,7 +25,7 @@ class DrawableObject {
     drawFrame(ctx) {
 
         // Begrenzen auf welche Objekte das Kollisionsrechteck gezeichnet werden soll
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {  
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle ) {  
 
             ctx.beginPath();   // Kollisionsrechteck zeichnen
             ctx.lineWidth = '5';

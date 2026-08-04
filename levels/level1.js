@@ -41,9 +41,9 @@ function initLevel() {  // startet erst beim Drücken auf START
             new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle(),
             new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle() 
         ], // 10 Flaschen
-        // [ 
-        //     new Coin(), new Coin(), new Coin(), new Coin(), new Coin(),
-        //     new Coin(), new Coin(), new Coin(), new Coin(), new Coin() 
-        // ]  // 10 Münzen
+        [ 
+            new Coin(0), new Coin(1), new Coin(2), new Coin(3), new Coin(4),
+            new Coin(5), new Coin(6), new Coin(7), new Coin(8), new Coin(9)
+        ]  // 10 Münzen
     );
 }
