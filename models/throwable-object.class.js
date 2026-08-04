@@ -29,7 +29,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
-        this.groundY = 340; // gleiche Bodenhöhe wie die liegende Flasche
+        this.groundY = 370; // gleiche Bodenhöhe wie die liegende Flasche
         this.direction = direction;
 
         this.throw();
