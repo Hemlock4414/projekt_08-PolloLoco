@@ -103,10 +103,13 @@ class Character extends MovableObject {
             }
 
             if (this.world) {
-                let camOffset = this.otherDirection
-                    ? this.world.canvas.width - 100 - this.width  // = 520, Charakter näher am rechten Rand → mehr Sicht nach links
-                    : 100;                                          // Charakter näher am linken Rand → mehr Sicht nach rechts
-                this.world.camera_x = -this.x + camOffset;
+                let targetOffset = this.otherDirection
+                    ? this.world.canvas.width - 300 - this.width    // = 520, Charakter näher am rechten Rand → mehr Sicht nach links
+                    : 150;                                          // Charakter näher am linken Rand → mehr Sicht nach rechts
+                let targetCameraX = -this.x + targetOffset;
+
+                let smoothing = 0.25; // 0 = keine Bewegung, 1 = sofortiger Sprung (aktuelles Verhalten)
+                this.world.camera_x += (targetCameraX - this.world.camera_x) * smoothing;
             }
         }, 1000 / 60); // 60 fps
 
