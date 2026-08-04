@@ -44,7 +44,9 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.SPACE && this.collectedBottles > 0 && !this.throwCooldown) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let direction = this.character.otherDirection ? 'left' : 'right';
+            let offsetX = this.character.otherDirection ? -30 : 100;
+            let bottle = new ThrowableObject(this.character.x + offsetX, this.character.y + 100, direction);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
             this.throwCooldown = true;

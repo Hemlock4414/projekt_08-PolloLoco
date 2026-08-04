@@ -19,7 +19,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
 
-    constructor(x, y) {
+    constructor(x, y, direction = 'right') {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
 
         this.loadImages(this.IMAGES_ROTATION);
@@ -30,6 +30,7 @@ class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 50;
         this.groundY = 340; // gleiche Bodenhöhe wie die liegende Flasche
+        this.direction = direction;
 
         this.throw();
         this.animate();
@@ -45,7 +46,7 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         this.throwInterval = setInterval(() => {
             if (!this.isSplashing) {
-                this.x += 10;   // horizontale Geschwindigkeit nach rechts
+                this.x += this.direction === 'left' ? -10 : 10;   // horizontale Geschwindigkeit nach rechts
             }
         }, 25);
     }

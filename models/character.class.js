@@ -103,8 +103,11 @@ class Character extends MovableObject {
             }
 
             if (this.world) {
-                this.world.camera_x = -this.x + 100;  // Kamera folgt dem Charakter, sodass er immer 100 Pixel vom linken Rand entfernt ist
-            };
+                let camOffset = this.otherDirection
+                    ? this.world.canvas.width - 100 - this.width  // = 520, Charakter näher am rechten Rand → mehr Sicht nach links
+                    : 100;                                          // Charakter näher am linken Rand → mehr Sicht nach rechts
+                this.world.camera_x = -this.x + camOffset;
+            }
         }, 1000 / 60); // 60 fps
 
         setInterval(() => {
