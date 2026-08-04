@@ -9,20 +9,22 @@ class Coin extends CollidableObject {
         'img/8_coin/coin_2.png'
     ];
 
-    constructor(index = 0) {
+    constructor(index = 0, total = 10) {
         super().loadImage(this.IMAGES[0]);
 
         this.loadImages(this.IMAGES);
 
-        // Größerer, garantierter Mindestabstand statt rein zufälliger Verteilung über das ganze Level
-        this.x = 200 + index * 250 + Math.random() * 100;
+        const startX = 200;
+        const maxX = 1900; // bewusster Sicherheitsabstand vor dem Endboss (x = 2200)
+        const spacing = (maxX - startX) / (total - 1);
 
-        this.y = 90 + Math.random() * 100; // schwebt niedriger als zuvor, weiterhin in der Luft
+        this.x = startX + index * spacing + Math.random() * (spacing * 0.3);
+
+        this.y = 90 + Math.random() * 100;
 
         this.animate();
     }
 
-    // Langsames Pulsieren zwischen den beiden Bildern (kein Gehen wie bei Chicken, daher eigene, einfache Animation statt playAnimation())
     animate() {
         setInterval(() => {
             this.currentImage = (this.currentImage + 1) % this.IMAGES.length;
