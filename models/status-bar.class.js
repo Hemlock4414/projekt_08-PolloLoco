@@ -40,7 +40,19 @@ class StatusBar extends DrawableObject {
 
     constructor(x, y, type) {
         super();    // muss immer rein um die Methoden und Eigenschaften der Elternklasse (DrawableObject) zu erben bzw initialisieren
-        this.IMAGES = this['IMAGES_' + type.toUpperCase()];
+
+        if (type === 'health') {
+            this.IMAGES = this.IMAGES_HEALTH;
+        } else if (type === 'bottle') {
+            this.IMAGES = this.IMAGES_BOTTLE;
+        } else if (type === 'coin') {
+            this.IMAGES = this.IMAGES_COIN;
+        } else if (type === 'endboss') {
+            this.IMAGES = this.IMAGES_ENDBOSS;
+        } else {
+            console.log('Unbekannter StatusBar-Typ:', type);
+        }
+
         this.loadImages(this.IMAGES);
         this.x = x;
         this.y = y;
@@ -56,11 +68,18 @@ class StatusBar extends DrawableObject {
     }
 
     resolveImageIndex() {
-        if (this.percentage >= 100) return 5;
-        else if (this.percentage > 80) return 4;
-        else if (this.percentage > 60) return 3;
-        else if (this.percentage > 40) return 2;
-        else if (this.percentage > 20) return 1;
-        else return 0;
+        if (this.percentage == 100) {
+            return 5;
+        } else if (this.percentage > 80) {
+            return 4;
+        } else if (this.percentage > 60) {
+            return 3;
+        } else if (this.percentage > 40) {
+            return 2;
+        } else if (this.percentage > 20) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
