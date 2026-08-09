@@ -23,6 +23,12 @@ class World {
     collectedCoins = 0;
     totalCoins = 0;
 
+    gameLost = false;
+    gameLostTriggered = false;
+
+    gameWonImage = new Image();
+    gameLostImage = new Image();
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -33,6 +39,8 @@ class World {
         this.totalBottles = this.level.bottles.length;
         this.statusBarEndboss.hidden = true;
         this.run();
+        this.gameWonImage.src = 'img/You won, you lost/You won A.png';
+        this.gameLostImage.src = 'img/You won, you lost/Game Over.png';
     }
 
     setWorld() {
@@ -121,10 +129,20 @@ class World {
 
     // Prüft, ob der Endboss besiegt wurde
     checkGameStatus() {
-        if (this.gameWon) return;
+        if (this.gameWon || this.gameLost || this.gameWonTriggered || this.gameLostTriggered) return;
+
         if (this.endboss && this.endboss.isDead()) {
-            this.gameWon = true;
-            clearInterval(this.runInterval);
+            this.gameWonTriggered = true;
+            setTimeout(() => {
+                this.gameWon = true;
+                clearInterval(this.runInterval);
+            }, 1500);
+        } else if (this.character.isDead()) {
+            this.gameLostTriggered = true;
+            setTimeout(() => {
+                this.gameLost = true;
+                clearInterval(this.runInterval);
+            }, 1500);
         }
     }
 
@@ -188,7 +206,9 @@ class World {
         let self = this;    
 
         if (this.gameWon) {
-            this.drawWinScreen();
+            this.drawEndScreen(this.gameWonImage);
+        } else if (this.gameLost) {
+            this.drawEndScreen(this.gameLostImage);
         }
 
         requestAnimationFrame(function() {
@@ -237,13 +257,10 @@ class World {
         this.ctx.restore();
     }
 
-    drawWinScreen() {
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        this.ctx.fillStyle = 'white';
-        this.ctx.font = '48px sans-serif';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText('DU HAST GEWONNEN!', this.canvas.width / 2, this.canvas.height / 2);
+    drawEndScreen(image) {
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.8;   // ← Transparenzgrad, anpassbar
+        this.ctx.drawImage(image, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.restore();
     }
 }
