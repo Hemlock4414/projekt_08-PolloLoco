@@ -14,6 +14,9 @@ class Endboss extends MovableObject {
     isAlerted = false;   // wurde der Boss schon "geweckt"?
     isMoving = false;    // läuft der Boss gerade auf den Character zu?
 
+    hasDied = false;
+    deadAnimationIndex = 0;
+
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -51,8 +54,8 @@ class Endboss extends MovableObject {
 
     IMAGES_DEAD = [
         'img/4_enemie_boss_chicken/5_dead/G24.png',
-        'img/4_enemie_boss_chicken/5_dead/G24.png',
-        'img/4_enemie_boss_chicken/5_dead/G24.png'
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
 
     constructor() {
@@ -88,7 +91,7 @@ class Endboss extends MovableObject {
         // Animationslogik: wählt je nach Zustand das passende Bildset
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                this.playDeadAnimation();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (!this.isAlerted) {
@@ -106,6 +109,7 @@ class Endboss extends MovableObject {
         if (this.energy < 0) {
             this.energy = 0;
         }
+        this.lastHit = new Date().getTime();
     }
 
     // Prüft die Distanz zum Character, löst bei Unterschreitung die Alert-Animation aus
@@ -152,6 +156,16 @@ class Endboss extends MovableObject {
             this.x + this.width > character.x &&
             this.y < character.y + character.height &&
             this.y + this.height > character.y;
+    }
+
+    playDeadAnimation() {
+        if (this.hasDied) return;
+        if (this.deadAnimationIndex >= this.IMAGES_DEAD.length) {
+            this.hasDied = true;
+            return;
+        }
+        this.img = this.imageCache[this.IMAGES_DEAD[this.deadAnimationIndex]];
+        this.deadAnimationIndex++;
     }
 }
 
