@@ -136,18 +136,18 @@ class World {
             setTimeout(() => {
                 this.gameWon = true;
                 clearInterval(this.runInterval);
-            }, 1500);
+            }, 2500);
         } else if (this.character.isDead()) {
             this.gameLostTriggered = true;
             setTimeout(() => {
                 this.gameLost = true;
                 clearInterval(this.runInterval);
-            }, 1500);
+            }, 2500);
         }
     }
 
     // Draw() wird immer wieder aufgerufen um den Canvas zu aktualisieren circa alle 16ms
-    draw() {
+draw() {
         // mit dieser Zeile wird der Canvas immer wieder geleert bevor neu gezeichnet wird
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -167,41 +167,44 @@ class World {
         // });
 
         this.ctx.translate(-this.camera_x, 0);  // Rückgängigmachen der Kameraverschiebung
-        // Fixed Objects wie Statusleiste zeichnen
-        this.statusBarHealth.setPercentage(this.character.energy);
-        this.statusBarCoin.setPercentage(this.collectedCoins / this.totalCoins * 100);
-        this.addToMap(this.statusBarCoin);
-        this.addToMap(this.statusBarHealth);
-        this.statusBarBottle.setPercentage(this.collectedBottles / this.totalBottles * 100);
-        this.addToMap(this.statusBarBottle);
-        if (this.endboss && this.endboss.isAlerted) {
-            this.statusBarEndboss.hidden = false;
+
+        if (!this.gameWon && !this.gameLost) {
+            // Fixed Objects wie Statusleiste zeichnen
+            this.statusBarHealth.setPercentage(this.character.energy);
+            this.statusBarCoin.setPercentage(this.collectedCoins / this.totalCoins * 100);
+            this.addToMap(this.statusBarCoin);
+            this.addToMap(this.statusBarHealth);
+            this.statusBarBottle.setPercentage(this.collectedBottles / this.totalBottles * 100);
+            this.addToMap(this.statusBarBottle);
+            if (this.endboss && this.endboss.isAlerted) {
+                this.statusBarEndboss.hidden = false;
+            }
+            if (!this.statusBarEndboss.hidden && this.endboss) {
+                this.statusBarEndboss.setPercentage(this.endboss.energy);
+                this.addToMap(this.statusBarEndboss);
+            }
+            // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
+            this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
+
+            this.addToMap(this.character);
+            // this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
+
+            // einfachere forEach Schleife
+            // this.enemies.forEach(enemy => {
+            //     this.addToMap(enemy);
+                //this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+                // Funktion unten (addToMap) fasst alles zusammen
+            // });
+            this.addObjectsToMap(this.level.enemies);
+
+            this.addObjectsToMap(this.throwableObjects);
+
+            this.addObjectsToMap(this.level.bottles);
+
+            this.addObjectsToMap(this.level.coins);
+
+            this.ctx.translate(-this.camera_x, 0); // Rückgängigmachen der Kameraverschiebung
         }
-        if (!this.statusBarEndboss.hidden && this.endboss) {
-            this.statusBarEndboss.setPercentage(this.endboss.energy);
-            this.addToMap(this.statusBarEndboss);
-        }
-        // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
-        this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
-
-        this.addToMap(this.character);
-        // this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-
-        // einfachere forEach Schleife
-        // this.enemies.forEach(enemy => {
-        //     this.addToMap(enemy);
-            //this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-            // Funktion unten (addToMap) fasst alles zusammen
-        // });
-        this.addObjectsToMap(this.level.enemies);
-
-        this.addObjectsToMap(this.throwableObjects);
-
-        this.addObjectsToMap(this.level.bottles);
-
-        this.addObjectsToMap(this.level.coins);
-
-        this.ctx.translate(-this.camera_x, 0); // Rückgängigmachen der Kameraverschiebung
 
         let self = this;    
 
@@ -259,8 +262,14 @@ class World {
 
     drawEndScreen(image) {
         this.ctx.save();
-        this.ctx.globalAlpha = 0.8;   // ← Transparenzgrad, anpassbar
-        this.ctx.drawImage(image, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.globalAlpha = 1; // Transparenzgrad, anpassbar
+
+        let width = this.canvas.width * 0.8;    // skalieren beide Achsen auf 80 %
+        let height = this.canvas.height * 0.8;
+        let x = (this.canvas.width - width) / 2;
+        let y = (this.canvas.height - height) / 2;
+
+        this.ctx.drawImage(image, x, y, width, height);
         this.ctx.restore();
     }
 }
