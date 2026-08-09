@@ -12,11 +12,13 @@ class World {
     keyboard;
     camera_x = 0;
     statusBarHealth = new StatusBar(40, 0, 'health');
+    statusBarCoin = new StatusBar(40, 50, 'coin');
     throwableObjects = [];
     gameWon = false;
 
     collectedBottles = 0;
     collectedCoins = 0;
+    totalCoins = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -24,6 +26,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.totalCoins = this.level.coins.length;
         this.run();
     }
 
@@ -143,6 +146,8 @@ class World {
         this.ctx.translate(-this.camera_x, 0);  // Rückgängigmachen der Kameraverschiebung
         // Fixed Objects wie Statusleiste zeichnen
         this.statusBarHealth.setPercentage(this.character.energy);
+        this.statusBarCoin.setPercentage(this.collectedCoins / this.totalCoins * 100);
+        this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarHealth);
         // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
         this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
