@@ -14,6 +14,7 @@ class World {
     statusBarHealth = new StatusBar(40, 0, 'health');
     statusBarCoin = new StatusBar(40, 50, 'coin');
     statusBarBottle = new StatusBar(40, 100, 'bottle');
+    statusBarEndboss = new StatusBar(480, 0, 'endboss');
     throwableObjects = [];
     gameWon = false;
 
@@ -30,12 +31,14 @@ class World {
         this.setWorld();
         this.totalCoins = this.level.coins.length;
         this.totalBottles = this.level.bottles.length;
+        this.statusBarEndboss.hidden = true;
         this.run();
     }
 
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => enemy.world = this);
+        this.endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 
     run() {
@@ -119,8 +122,7 @@ class World {
     // Prüft, ob der Endboss besiegt wurde
     checkGameStatus() {
         if (this.gameWon) return;
-        let endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
-        if (endboss && endboss.isDead()) {
+        if (this.endboss && this.endboss.isDead()) {
             this.gameWon = true;
             clearInterval(this.runInterval);
         }
@@ -154,6 +156,13 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.statusBarBottle.setPercentage(this.collectedBottles / this.totalBottles * 100);
         this.addToMap(this.statusBarBottle);
+        if (this.endboss && this.endboss.isAlerted) {
+            this.statusBarEndboss.hidden = false;
+        }
+        if (!this.statusBarEndboss.hidden) {
+            this.statusBarEndboss.setPercentage(this.endboss.energy);
+            this.addToMap(this.statusBarEndboss);
+        }
         // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
         this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
 
