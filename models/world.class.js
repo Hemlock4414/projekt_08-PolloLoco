@@ -13,10 +13,12 @@ class World {
     camera_x = 0;
     statusBarHealth = new StatusBar(40, 0, 'health');
     statusBarCoin = new StatusBar(40, 50, 'coin');
+    statusBarBottle = new StatusBar(40, 100, 'bottle');
     throwableObjects = [];
     gameWon = false;
 
     collectedBottles = 0;
+    totalBottles = 0;
     collectedCoins = 0;
     totalCoins = 0;
 
@@ -27,6 +29,7 @@ class World {
         this.draw();
         this.setWorld();
         this.totalCoins = this.level.coins.length;
+        this.totalBottles = this.level.bottles.length;
         this.run();
     }
 
@@ -149,6 +152,8 @@ class World {
         this.statusBarCoin.setPercentage(this.collectedCoins / this.totalCoins * 100);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarHealth);
+        this.statusBarBottle.setPercentage(this.collectedBottles / this.totalBottles * 100);
+        this.addToMap(this.statusBarBottle);
         // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
         this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
 
