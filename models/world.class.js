@@ -33,14 +33,14 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.gameWonImage.src = 'img/You won, you lost/You won A.png';
+        this.gameLostImage.src = 'img/You won, you lost/Game Over.png';
         this.draw();
         this.setWorld();
         this.totalCoins = this.level.coins.length;
         this.totalBottles = this.level.bottles.length;
         this.statusBarEndboss.hidden = true;
         this.run();
-        this.gameWonImage.src = 'img/You won, you lost/You won A.png';
-        this.gameLostImage.src = 'img/You won, you lost/Game Over.png';
     }
 
     setWorld() {
