@@ -3,9 +3,11 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 60;
-    energy = 100;
 
-    speed = 3;
+    energy = 100;
+    speed = 4;
+    damage = 20;   // Schaden pro Flaschentreffer
+
     alertRange = 500;    // Abstand, ab dem der Boss den Character bemerkt
     attackRange = 250;   // Abstand, ab dem der Boss angreift statt zu laufen
 
@@ -97,6 +99,13 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
+    }
+
+    hit() {
+        this.energy -= this.damage;
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
     }
 
     // Prüft die Distanz zum Character, löst bei Unterschreitung die Alert-Animation aus

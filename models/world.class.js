@@ -11,12 +11,17 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    // statusBar = new StatusBar();
+    statusBarHealth = new StatusBar(40, 0, 'health');
+    statusBarCoin = new StatusBar(40, 50, 'coin');
+    statusBarBottle = new StatusBar(40, 100, 'bottle');
+    statusBarEndboss = new StatusBar(480, 0, 'endboss');
     throwableObjects = [];
     gameWon = false;
 
     collectedBottles = 0;
+    totalBottles = 0;
     collectedCoins = 0;
+    totalCoins = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -24,12 +29,16 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.totalCoins = this.level.coins.length;
+        this.totalBottles = this.level.bottles.length;
+        this.statusBarEndboss.hidden = true;
         this.run();
     }
 
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => enemy.world = this);
+        this.endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 
     run() {
@@ -113,8 +122,7 @@ class World {
     // Prüft, ob der Endboss besiegt wurde
     checkGameStatus() {
         if (this.gameWon) return;
-        let endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
-        if (endboss && endboss.isDead()) {
+        if (this.endboss && this.endboss.isDead()) {
             this.gameWon = true;
             clearInterval(this.runInterval);
         }
@@ -142,7 +150,20 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);  // Rückgängigmachen der Kameraverschiebung
         // Fixed Objects wie Statusleiste zeichnen
-        // this.addToMap(this.statusBar);          // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
+        this.statusBarHealth.setPercentage(this.character.energy);
+        this.statusBarCoin.setPercentage(this.collectedCoins / this.totalCoins * 100);
+        this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarHealth);
+        this.statusBarBottle.setPercentage(this.collectedBottles / this.totalBottles * 100);
+        this.addToMap(this.statusBarBottle);
+        if (this.endboss && this.endboss.isAlerted) {
+            this.statusBarEndboss.hidden = false;
+        }
+        if (!this.statusBarEndboss.hidden && this.endboss) {
+            this.statusBarEndboss.setPercentage(this.endboss.energy);
+            this.addToMap(this.statusBarEndboss);
+        }
+        // Zwischen der Kameraverschiebungen zeichnen, damit die Statusleiste fixiert bleibt
         this.ctx.translate(this.camera_x, 0);   // Kamera wieder aktivieren
 
         this.addToMap(this.character);
