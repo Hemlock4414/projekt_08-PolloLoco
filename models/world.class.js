@@ -46,6 +46,7 @@ class World {
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach(enemy => enemy.world = this);
+        this.level.clouds.forEach(cloud => cloud.world = this);
         this.endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 

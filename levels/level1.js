@@ -11,7 +11,8 @@ function initLevel() {  // startet erst beim Drücken auf START
             new Endboss()
         ],
         [
-            new Cloud()
+                new Cloud(0),
+                new Cloud(1200)
         ],
         [
             new BackgroundObject('img/5_background/layers/air.png', -719),
