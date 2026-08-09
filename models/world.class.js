@@ -159,7 +159,7 @@ class World {
         if (this.endboss && this.endboss.isAlerted) {
             this.statusBarEndboss.hidden = false;
         }
-        if (!this.statusBarEndboss.hidden) {
+        if (!this.statusBarEndboss.hidden && this.endboss) {
             this.statusBarEndboss.setPercentage(this.endboss.energy);
             this.addToMap(this.statusBarEndboss);
         }
