@@ -109,6 +109,7 @@ class Endboss extends MovableObject {
         if (this.energy < 0) {
             this.energy = 0;
         }
+        this.lastHit = new Date().getTime();
     }
 
     // Prüft die Distanz zum Character, löst bei Unterschreitung die Alert-Animation aus
