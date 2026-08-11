@@ -9,6 +9,11 @@ function initLevel() {  // startet erst beim Drücken auf START
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
             new Endboss()
         ],
         [
