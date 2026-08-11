@@ -8,11 +8,12 @@ function initLevel() {  // startet erst beim Drücken auf START
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            new Chicken(),
             new Endboss()
         ],
         [
-                new Cloud(0),
-                new Cloud(1200)
+            new Cloud(0),
+            new Cloud(1200)
         ],
         [
             new BackgroundObject('img/5_background/layers/air.png', -719),
