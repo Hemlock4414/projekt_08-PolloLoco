@@ -1,8 +1,8 @@
 class ChickenSmall extends Chicken {
 
-    y = 360;
-    height = 60;
-    width = 70;
+    y = 370;
+    height = 50;
+    width = 60;
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
