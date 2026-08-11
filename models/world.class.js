@@ -14,7 +14,7 @@ class World {
     statusBarHealth = new StatusBar(40, 0, 'health');
     statusBarCoin = new StatusBar(40, 50, 'coin');
     statusBarBottle = new StatusBar(40, 100, 'bottle');
-    statusBarEndboss = new StatusBar(480, 0, 'endboss');
+    statusBarEndboss = new StatusBar(480, 8, 'endboss');
     throwableObjects = [];
     gameWon = false;
 
