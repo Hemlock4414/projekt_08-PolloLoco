@@ -1,13 +1,28 @@
+/* rye-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Rye';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/rye-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-image: url('img/assets/desert.svg');
+    background-image: url('img/backdrop/desert.svg');
     background-size: cover;
     /* background-repeat: no-repeat; */
     background-position: center;
+}
+
+h1 {
+    font-family: 'Rye', cursive;
+    font-size: 3rem;
+    text-align: center;
 }
 
 canvas {
