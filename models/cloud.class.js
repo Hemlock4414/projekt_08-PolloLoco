@@ -22,11 +22,8 @@ class Cloud extends MovableObject {
     }
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-            if (this.x + this.width < 0 && this.world) {
-                this.x = this.world.level.level_end_x + 500 + Math.random() * 1500;
-            }
-        }, 1000 / 60);
+        setInterval( () => {
+            this.x -= this.speed; // Wolke bewegt sich nach links um x Pixel
+        }, 1000 / 60); // 60 fps
     }
 }
