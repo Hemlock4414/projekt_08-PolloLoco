@@ -1,5 +1,7 @@
 let canvas;
 
+let fullscreen = false;
+
 // ctx = context
 
 let world;
@@ -49,19 +51,22 @@ window.addEventListener('keyup', (event) => {
 
 // Fullscreen
 
-function fullscreen() {
-    let fullscreenElement = document.getElementById('fullscreen');
-    enterFullscreen(fullscreenElement);
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        exitFullscreen();
+    } else {
+        enterFullscreen(document.getElementById('fullscreen'));
+    }
 }
 
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { /* Firefox */
+    } else if (element.mozRequestFullScreen) {
         element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { /* IE/Edge */
+    } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
     }
 }
@@ -69,11 +74,34 @@ function enterFullscreen(element) {
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) { /* Firefox */
+    } else if (document.mozCancelFullScreen) {
         document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE/Edge */
+    } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
     }
+}
+
+document.addEventListener('fullscreenchange', () => {
+    let btn = document.getElementById('fullscreenBtn');
+    if (document.fullscreenElement) {
+        addFullscreenStyle();
+        btn.textContent = '⤡';
+    } else {
+        removeFullscreenStyle();
+        btn.textContent = '⛶';
+    }
+});
+
+function addFullscreenStyle() {
+    fullscreen = true;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+}
+
+function removeFullscreenStyle() {
+    fullscreen = false;
+    canvas.style.width = '';
+    canvas.style.height = '';
 }
