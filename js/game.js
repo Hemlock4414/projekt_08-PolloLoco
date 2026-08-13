@@ -2,6 +2,8 @@ let canvas;
 
 let fullscreen = false;
 
+let soundMuted = false;
+
 // ctx = context
 
 let world;
@@ -104,4 +106,17 @@ function removeFullscreenStyle() {
     fullscreen = false;
     canvas.style.width = '';
     canvas.style.height = '';
+}
+// End Fullscreen
+
+function toggleMute() {
+    soundMuted = !soundMuted;
+    let btn = document.getElementById('muteBtn');
+    btn.textContent = soundMuted ? '🔇' : '🔊';
+}
+
+function playSound(audio) {
+    if (soundMuted) return;
+    audio.currentTime = 0;
+    audio.play();
 }
