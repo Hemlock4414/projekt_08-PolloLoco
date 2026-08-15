@@ -109,13 +109,14 @@ function removeFullscreenStyle() {
 }
 // End Fullscreen
 
-function showBackToStartButton() {
+function showRestartButton() {
     document.getElementById('hudControls-topLeft').style.display = 'flex';
 }
 
-function backToStart() {
+function restart() {
     document.getElementById('hudControls-topLeft').style.display = 'none';
     document.getElementById('startScreen').style.display = 'flex';
+    if (world) world.stop();
     world = null;
 }
 
