@@ -53,7 +53,6 @@ window.addEventListener('keyup', (event) => {
 // 20, 20, 50, 150);  x-axis, y-axis, width, height
 
 // Fullscreen
-
 function toggleFullscreen() {
     if (document.fullscreenElement) {
         exitFullscreen();
@@ -109,6 +108,16 @@ function removeFullscreenStyle() {
     canvas.style.height = '';
 }
 // End Fullscreen
+
+function showBackToStartButton() {
+    document.getElementById('hudControls-topLeft').style.display = 'flex';
+}
+
+function backToStart() {
+    document.getElementById('hudControls-topLeft').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'flex';
+    world = null;
+}
 
 function toggleMute() {
     soundMuted = !soundMuted;

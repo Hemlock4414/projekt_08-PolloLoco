@@ -40,6 +40,11 @@ h1 {
     display: inline-block;
 }
 
+canvas {
+    background-color: black;
+    display: block;
+}
+
 #startScreen {
     position: absolute;
     top: 0;
@@ -97,9 +102,10 @@ h1 {
     background: rgba(0, 0, 0, 0.8);
 }
 
-canvas {
-    background-color: black;
-    display: block;
+.hud-corner.top-left {
+    top: 10px;
+    left: 10px;
+    display: none;
 }
 
 /* Smartphones Responsive */
