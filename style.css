@@ -112,16 +112,70 @@ canvas {
     display: none;
 }
 
+.controls-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Luckiest Guy';
+    color: #FFD30F;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.control-item img {
+    width: 48px;
+    height: 48px;
+}
+
+.controls-info-btn {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
 /* Smartphones Responsive */
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
+    }
+
+    h1,
+    .controls-info {
+        display: none;
+    }
+
+    .controls-info-btn {
+        display: block;
     }
 }
 
 @media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
+    }
+
+    h1,
+    .controls-info {
+        display: none;
+    }
+
+    .controls-info-btn {
+        display: block;
     }
 }
 /* Smartphones END */
