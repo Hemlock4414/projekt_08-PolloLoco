@@ -60,6 +60,11 @@ class World {
         }, 1000 / 60);
     }
 
+    stop() {
+        this.stopped = true;
+        clearInterval(this.runInterval);
+    }
+
     checkThrowObjects() {
         if (this.keyboard.SPACE && this.collectedBottles > 0 && !this.throwCooldown) {
             let direction = this.character.otherDirection ? 'left' : 'right';
@@ -137,18 +142,23 @@ class World {
             setTimeout(() => {
                 this.gameWon = true;
                 clearInterval(this.runInterval);
+                showRestartButton();
             }, 2500);
         } else if (this.character.isDead()) {
             this.gameLostTriggered = true;
             setTimeout(() => {
                 this.gameLost = true;
                 clearInterval(this.runInterval);
+                showRestartButton();
             }, 2500);
         }
     }
 
     // Draw() wird immer wieder aufgerufen um den Canvas zu aktualisieren circa alle 16ms
-draw() {
+    draw() {
+
+        if (this.stopped) return;
+
         // mit dieser Zeile wird der Canvas immer wieder geleert bevor neu gezeichnet wird
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
