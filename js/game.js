@@ -31,9 +31,6 @@ window.addEventListener('keydown', (event) => {
     if (event.code === "ArrowUp") {
         keyboard.UP    = true;
     }
-    if (event.code === "ArrowDown"){
-        keyboard.DOWN  = true;
-    }
     if (event.code === "Space") {
         keyboard.SPACE = true;
     }
@@ -46,7 +43,6 @@ window.addEventListener('keyup', (event) => {
     if (event.code === "ArrowRight") keyboard.RIGHT = false;
     if (event.code === "ArrowLeft")  keyboard.LEFT  = false;
     if (event.code === "ArrowUp")    keyboard.UP    = false;
-    if (event.code === "ArrowDown")  keyboard.DOWN  = false;
     if (event.code === "Space")      keyboard.SPACE = false;
 });
 
@@ -130,4 +126,12 @@ function playSound(audio) {
     if (soundMuted) return;
     audio.currentTime = 0;
     audio.play();
+}
+
+function openControlsDialog() {
+    document.getElementById('controlsDialog').showModal();
+}
+
+function closeControlsDialog() {
+    document.getElementById('controlsDialog').close();
 }

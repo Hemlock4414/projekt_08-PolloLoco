@@ -29,7 +29,7 @@
             <button id="restartBtn" class="primary-btn restart-btn" onclick="restart()">Restart</button>
         </div>
 
-        <button id="controlsInfoBtn" class="controls-info-btn" onclick="toggleControlsInfo()">🎮 Controls</button>
+        <button id="controlsInfoBtn" class="controls-info-btn" onclick="openControlsDialog()">🎮 Controls</button>
     </div>
 
     <div id="controlsInfo" class="controls-info">
@@ -50,6 +50,29 @@
             <span>Throw</span>
         </div>
     </div>
+
+    <dialog id="controlsDialog" class="controls-dialog">
+        <button class="controls-dialog-close" onclick="closeControlsDialog()">✕</button>
+        <h2>Controls</h2>
+        <div class="controls-grid">
+            <div class="control-item">
+                <img src="img/controls/icons8-left-48.png" alt="Arrow Left">
+                <span>Move Left</span>
+            </div>
+            <div class="control-item">
+                <img src="img/controls/icons8-right-48.png" alt="Arrow Right">
+                <span>Move Right</span>
+            </div>
+            <div class="control-item">
+                <img src="img/controls/icons8-arrow-up-48.png" alt="Arrow Up">
+                <span>Jump</span>
+            </div>
+            <div class="control-item">
+                <img src="img/controls/icons8-spacebar-white-50.png" alt="Space">
+                <span>Throw</span>
+            </div>
+        </div>
+    </dialog>
 
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
