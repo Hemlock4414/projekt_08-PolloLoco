@@ -12,11 +12,12 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('myCanvas');
+}
+
+function startGame() {
+    document.getElementById('startScreen').style.display = 'none';
     initLevel();
     world = new World(canvas, keyboard);
-
-    console.log('My Character is', world.character);
-
 }
 
 // Listen for keyboard events
