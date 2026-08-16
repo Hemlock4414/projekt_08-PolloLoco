@@ -12,7 +12,7 @@ class Character extends MovableObject {
         right: 0
     };
 
-    // walking_sound = new Audio('audio/walking.mp3');
+    walking_sound = new Audio('audio/sandwalking_step.wav');
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -85,6 +85,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_IDLE_SHORT);
         this.loadImages(this.IMAGES_IDLE_LONG);
+        this.walking_sound.loop = true;
         this.applyGravity();
         this.lastMoveTime = Date.now();
         this.animate();
@@ -96,13 +97,13 @@ class Character extends MovableObject {
             if (this.world && this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                // this.walking_sound.play();
+                this.startWalkingSound();
             }
             
             if(this.world && this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true; // Charakter schaut nach links durch Spiegeln
-                // this.walking_sound.play();
+                this.startWalkingSound();
             }
 
             if(this.world && this.world.keyboard.UP && !this.isAboveGround()) {
@@ -135,6 +136,7 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                     this.lastMoveTime = Date.now(); // lastMoveTime wird nur bei Bewegung aktualisiert
                 } else {
+                    this.stopWalkingSound();
                     let idleTime = Date.now() - this.lastMoveTime;
                     if (idleTime > 15000) {
                         this.playAnimation(this.IMAGES_IDLE_LONG);
@@ -151,5 +153,17 @@ class Character extends MovableObject {
         let characterBottom = this.y + this.height;
         let enemyTop = enemy.y;
         return this.speedY < 0 && characterBottom < enemyTop + (enemy.height / 2);
+    }
+    
+    startWalkingSound() {
+        if (soundMuted) return;
+        if (this.walking_sound.paused) {
+            this.walking_sound.play();
+        }
+    }
+
+    stopWalkingSound() {
+        this.walking_sound.pause();
+        this.walking_sound.currentTime = 0;
     }
 }
