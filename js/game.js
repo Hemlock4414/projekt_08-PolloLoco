@@ -16,7 +16,8 @@ soundtrack.muted = true;
 
 function init() {
     canvas = document.getElementById('myCanvas');
-    soundtrack.play().catch(() => {});
+    // soundtrack.play().catch(() => {});
+    soundtrack.play().catch(err => console.warn('Soundtrack play failed:', err.name, err.message));
 }
 
 function startGame() {

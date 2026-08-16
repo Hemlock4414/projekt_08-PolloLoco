@@ -88,10 +88,10 @@ class World {
                 this.character.hit();
                 // this.character.energy -= 5; // wird ersetzt durch this.character.hit();
             } else if (this.character.isStomping(enemy)) {
-                enemy.energy = 0;                           // sofort besiegt
+                enemy.energy = 0;                           // sofort 
+                playSound(this.character.stomp_sound);
             } else {
                 this.character.hit();
-                console.log('Collision with Character ', enemy, 'HP ', this.character.energy);
                 // this.statusBar.setPercentage(this.character.energy);
             }
         });
