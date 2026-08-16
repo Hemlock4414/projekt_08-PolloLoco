@@ -3,6 +3,8 @@ class ThrowableObject extends MovableObject {
     isSplashing = false;
     hasHit = false;
 
+    splash_sound = new Audio('audio/bottle-smash.mp3');
+
     IMAGES_ROTATION = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -65,6 +67,7 @@ class ThrowableObject extends MovableObject {
         if (this.isSplashing) return; // nicht doppelt starten
         this.isSplashing = true;
         this.speedY = 0; // Flasche bleibt an Ort und Stelle stehen für den Splash
+        playSound(this.splash_sound);
 
         let i = 0;
         this.splashInterval = setInterval(() => {

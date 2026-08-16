@@ -120,6 +120,7 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.collectedBottles++;
                 bottle.collected = true;
+                playSound(bottle.pickup_sound);
             }
         });
         this.level.bottles = this.level.bottles.filter(bottle => !bottle.collected);
