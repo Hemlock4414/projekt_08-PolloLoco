@@ -4,7 +4,7 @@ class Bottle extends CollidableObject {
     height = 70;
     width = 60;
 
-    pickup_sound = new Audio('audio/bottle-collect.mp3');
+    static pickup_sound = new Audio('audio/bottle-collect.mp3');
 
     IMAGES = [
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
@@ -15,5 +15,6 @@ class Bottle extends CollidableObject {
         super().loadImage(this.IMAGES[0]);
         this.loadImages(this.IMAGES);
         this.x = 200 + Math.random() * 2000; // verteilt über das gesamte Level
+        Bottle.pickup_sound.volume = 0.1;
     }
 }

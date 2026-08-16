@@ -36,6 +36,8 @@ class ThrowableObject extends MovableObject {
 
         this.throw();
         this.animate();
+
+        this.splash_sound.volume = 0.4;
     }
 
     onGroundHit() {
