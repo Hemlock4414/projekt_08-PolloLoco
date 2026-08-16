@@ -2,7 +2,7 @@ let canvas;
 
 let fullscreen = false;
 
-let soundMuted = false;
+let soundMuted = true;
 
 // ctx = context
 
@@ -10,8 +10,13 @@ let world;
 
 let keyboard = new Keyboard();
 
+let soundtrack = new Audio('audio/mexican-guitar.mp3');
+soundtrack.loop = true;
+soundtrack.muted = true;
+
 function init() {
     canvas = document.getElementById('myCanvas');
+    soundtrack.play().catch(() => {});
 }
 
 function startGame() {
@@ -118,6 +123,7 @@ function restart() {
 
 function toggleMute() {
     soundMuted = !soundMuted;
+    soundtrack.muted = soundMuted;
     let btn = document.getElementById('muteBtn');
     btn.textContent = soundMuted ? '🔇' : '🔊';
 }
