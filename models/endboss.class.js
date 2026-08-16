@@ -16,12 +16,10 @@ class Endboss extends MovableObject {
 
     hasDied = false;
     deadAnimationIndex = 0;
-    wasAttacking = false;
 
     alert_sound = new Audio('audio/endboss_alert.mp3');
     hurt_sound = new Audio('audio/endboss-hurt.mp3');
     dead_sound = new Audio('audio/endboss-death.mp3');
-    attack_sound = new Audio('audio/endboss-attack.wav');
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -98,19 +96,14 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playDeadAnimation();
-                this.wasAttacking = false;
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.wasAttacking = false;
             } else if (!this.isAlerted) {
                 // Boss steht still, keine laufende Animation nötig
             } else if (this.isInAttackRange()) {
                 this.playAnimation(this.IMAGES_ATTACK);
-                if (!this.wasAttacking) playSound(this.attack_sound);
-                this.wasAttacking = true;
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
-                this.wasAttacking = false;
             }
         }, 150);
     }
