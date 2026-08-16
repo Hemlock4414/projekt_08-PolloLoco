@@ -102,7 +102,7 @@ class Character extends MovableObject {
 
     animate() {
 
-        setInterval( () => {
+         this.movementInterval = setInterval( () => {
             if (this.world && this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -130,7 +130,7 @@ class Character extends MovableObject {
             }
         }, 1000 / 60); // 60 fps
 
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.stopWalkingSound();
@@ -203,5 +203,12 @@ class Character extends MovableObject {
     stopIdleLongSound() {
         this.idle_long_sound.pause();
         this.idle_long_sound.currentTime = 0;
+    }
+
+    stop() {
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+        this.stopWalkingSound();
+        this.stopIdleLongSound();
     }
 }

@@ -63,6 +63,7 @@ class World {
     stop() {
         this.stopped = true;
         clearInterval(this.runInterval);
+        this.character.stop();
     }
 
     checkThrowObjects() {
@@ -143,6 +144,7 @@ class World {
             setTimeout(() => {
                 this.gameWon = true;
                 clearInterval(this.runInterval);
+                this.character.stop();
                 showRestartButton();
             }, 2500);
         } else if (this.character.isDead()) {
@@ -150,6 +152,7 @@ class World {
             setTimeout(() => {
                 this.gameLost = true;
                 clearInterval(this.runInterval);
+                this.character.stop();
                 showRestartButton();
             }, 2500);
         }
