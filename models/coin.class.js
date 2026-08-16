@@ -1,8 +1,9 @@
 class Coin extends CollidableObject {
 
     height = 120;
-
     width = 120;
+
+    static pickup_sound = new Audio('audio/coin-pickup-sfx-2.wav');
 
     offset = {
         top: 40,

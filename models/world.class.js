@@ -130,6 +130,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.collectedCoins++;
                 coin.collected = true;
+                playSound(Coin.pickup_sound);
             }
         });
         this.level.coins = this.level.coins.filter(coin => !coin.collected);
