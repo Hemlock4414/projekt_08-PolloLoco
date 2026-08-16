@@ -125,7 +125,7 @@ function toggleMute() {
 function playSound(audio) {
     if (soundMuted) return;
     audio.currentTime = 0;
-    audio.play();
+    audio.play().catch(() => {});
 }
 
 function openControlsDialog() {
