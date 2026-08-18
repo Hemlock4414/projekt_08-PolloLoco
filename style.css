@@ -78,7 +78,8 @@ canvas {
 }
 
 .restart-btn {
-    margin-left: 20px;
+    margin-left: 0px;
+    margin-top: 0px;
 }
 
 .hud-corner {
@@ -94,8 +95,8 @@ canvas {
 }
 
 .hud-corner.bottom-right img {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
 }
 
 .hud-corner.bottom-right button {
@@ -107,7 +108,6 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
     padding: 8px;
 }
 
