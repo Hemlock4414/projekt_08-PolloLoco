@@ -127,8 +127,9 @@ function restart() {
 function toggleMute() {
     soundMuted = !soundMuted;
     soundtrack.muted = soundMuted;
-    let btn = document.getElementById('muteBtn');
-    btn.textContent = soundMuted ? '🔇' : '🔊';
+    let icon = document.getElementById('muteIcon');
+    icon.src = soundMuted ? 'img/icons/icons8-mute-50.png' : 'img/icons/icons8-audio-50.png';
+    icon.alt = soundMuted ? 'Mute' : 'Unmute';
 }
 
 function playSound(audio) {

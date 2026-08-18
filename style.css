@@ -73,7 +73,8 @@ canvas {
 }
 
 .primary-btn:hover {
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(233, 102, 9, 0.8);
+    /* background: rgba(0, 0, 0, 0.75); */
 }
 
 .restart-btn {
@@ -92,18 +93,27 @@ canvas {
     right: 10px;
 }
 
+.hud-corner.bottom-right img {
+    width: 36px;
+    height: 36px;
+}
+
 .hud-corner.bottom-right button {
     background: rgba(0, 0, 0, 0.3);
     color: white;
     border: 2px solid white;
     border-radius: 6px;
-    font-size: 1.8rem;
-    padding: 4px 10px 0;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    padding: 8px;
 }
 
 .hud-corner button:hover {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(233, 102, 9, 0.8);
+    /* background: rgba(0, 0, 0, 0.6); */
 }
 
 .hud-corner.top-left {
