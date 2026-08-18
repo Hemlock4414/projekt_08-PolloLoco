@@ -88,13 +88,15 @@ function exitFullscreen() {
 }
 
 document.addEventListener('fullscreenchange', () => {
-    let btn = document.getElementById('fullscreenBtn');
+    let icon = document.getElementById('fullscreenIcon');
     if (document.fullscreenElement) {
         addFullscreenStyle();
-        btn.textContent = '⤡';
+        icon.src = 'img/icons/icons8-normal-screen-48.png';
+        icon.alt = 'Exit fullscreen';
     } else {
         removeFullscreenStyle();
-        btn.textContent = '⛶';
+        icon.src = 'img/icons/icons8-full-screen-48.png';
+        icon.alt = 'Fullscreen';
     }
 });
 

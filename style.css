@@ -93,17 +93,17 @@ canvas {
 }
 
 .hud-corner.bottom-right button {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     color: white;
     border: 2px solid white;
     border-radius: 6px;
-    font-size: 1.2rem;
-    padding: 6px 10px;
+    font-size: 1.8rem;
+    padding: 4px 10px 0;
     cursor: pointer;
 }
 
 .hud-corner button:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .hud-corner.top-left {
