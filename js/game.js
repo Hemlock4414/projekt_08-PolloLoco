@@ -137,11 +137,3 @@ function playSound(audio) {
     audio.currentTime = 0;
     audio.play().catch(() => {});
 }
-
-function openControlsDialog() {
-    document.getElementById('controlsDialog').showModal();
-}
-
-function closeControlsDialog() {
-    document.getElementById('controlsDialog').close();
-}

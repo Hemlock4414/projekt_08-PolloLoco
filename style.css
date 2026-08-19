@@ -161,44 +161,6 @@ canvas {
     cursor: pointer;
 }
 
-/* Dialog Controls */
-.controls-dialog {
-    position: relative;
-    border: 2px solid white;
-    border-radius: 8px;
-    padding: 24px 28px;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.controls-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.controls-dialog h2 {
-    margin: 0 0 16px;
-    text-align: center;
-    font-family: 'Luckiest Guy';
-    color: #FFD30F;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-.controls-dialog-close {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: transparent;
-    border: none;
-    color: #FFD30F;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.controls-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
 .turn-device {
     width: 100dvw;
     height: 100dvh;
