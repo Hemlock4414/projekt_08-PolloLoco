@@ -239,6 +239,11 @@ canvas {
     pointer-events: none; /* Icon soll Klick nicht "stehlen" */
 }
 
+.throw-btn img {
+    width: 12px;
+    height: 38px;
+}
+
 .mobile-btn:active {
     background: rgba(233, 102, 9, 0.8); /* gleiche Hover-Farbe wie bei euren anderen Buttons */
 }
