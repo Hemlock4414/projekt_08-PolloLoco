@@ -93,7 +93,7 @@ class MovableObject extends DrawableObject {
 
         // Walking animation
         this.animationCounter = (this.animationCounter || 0) + 1;
-        if (this.animationCounter % 6 !== 0) return; // nur jeden 6. Tick ein neues Bild (höhere Zahl = langsamer)
+        if (this.animationCounter % 4 !== 0) return; // nur jeden 6. Tick ein neues Bild (höhere Zahl = langsamer)
         let index = this.currentImage % images.length; 
         // let index = 0 % 6; -> 0 Rest 0
         // let index = 1 % 6; -> 0 Rest 1

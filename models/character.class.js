@@ -5,6 +5,8 @@ class Character extends MovableObject {
     x = 0;
     world;
 
+    ANIMATION_SPEED = 12; // höher = langsamer, nur für Character
+
     offset = {
         top: 120,
         bottom: 0,
@@ -212,5 +214,14 @@ class Character extends MovableObject {
         clearInterval(this.animationInterval);
         this.stopWalkingSound();
         this.stopIdleLongSound();
+    }
+
+    playAnimation(images) {
+        this.animationCounter = (this.animationCounter || 0) + 1;
+        if (this.animationCounter % this.ANIMATION_SPEED !== 0) return;
+        let index = this.currentImage % images.length;
+        let path = images[index];
+        this.img = this.imageCache[path];
+        this.currentImage++;
     }
 }
