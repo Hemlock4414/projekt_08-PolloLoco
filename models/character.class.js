@@ -144,6 +144,7 @@ class Character extends MovableObject {
                 this.stopWalkingSound();
                 this.stopIdleLongSound();
                 this.wasIdleLong = false;
+                this.lastMoveTime = Date.now();
                 if (!this.wasHurt) playSound(this.hurt_sound);
                 this.wasHurt = true;
 
@@ -154,6 +155,7 @@ class Character extends MovableObject {
                 this.wasIdleLong = false;
                 this.wasHurt = false;
                 this.wasDead = false;
+                this.lastMoveTime = Date.now();
 
             } else {
                 this.wasHurt = false;
