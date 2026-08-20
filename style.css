@@ -199,6 +199,51 @@ canvas {
     gap: 20px;
 }
 
+/* Mobile controls */
+.mobile_buttons {
+    display: none; /* Basis: aus, wird per pointer:coarse-Query eingeblendet */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 16px 16px;
+    box-sizing: border-box;
+    z-index: 15; /* über hud-corner (10), unter turn-device (999) */
+    pointer-events: none; /* Container selbst nicht klickbar, nur Kinder */
+}
+
+.mobile-controls-group {
+    display: flex;
+    gap: 12px;
+    pointer-events: auto; /* Buttons wieder klickbar */
+}
+
+.mobile-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    touch-action: manipulation; /* verhindert Doppel-Tap-Zoom/Delay */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-btn img {
+    width: 28px;
+    height: 28px;
+    pointer-events: none; /* Icon soll Klick nicht "stehlen" */
+}
+
+.mobile-btn:active {
+    background: rgba(233, 102, 9, 0.8); /* gleiche Hover-Farbe wie bei euren anderen Buttons */
+}
+/* Mobile controls End */
+
 .turn-device {
     width: 100dvw;
     height: 100dvh;
@@ -242,8 +287,10 @@ canvas {
 }
 
 @media (pointer: coarse) {
-  .mobile_buttons {
-    display: flex;
+  @media (orientation: landscape) {
+    .mobile_buttons.game-active {
+      display: flex;
+    }
   }
 
   @media (orientation: portrait) {
@@ -251,6 +298,10 @@ canvas {
       z-index: 999;
       display: flex;
     }
+  }
+
+  .controls-info-btn {
+    display: none;
   }
 }
 /* Smartphones END */

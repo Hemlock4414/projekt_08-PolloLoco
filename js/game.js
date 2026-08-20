@@ -18,10 +18,12 @@ function init() {
     canvas = document.getElementById('myCanvas');
     soundtrack.play().catch(() => {});
     // soundtrack.play().catch(err => console.warn('Soundtrack play failed:', err.name, err.message));
+    bindMobileControls();
 }
 
 function startGame() {
     document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('mobileControls').classList.add('game-active');
     initLevel();
     world = new World(canvas, keyboard);
 }
@@ -120,6 +122,7 @@ function showRestartButton() {
 function restart() {
     document.getElementById('hudControls-topLeft').style.display = 'none';
     document.getElementById('startScreen').style.display = 'flex';
+    document.getElementById('mobileControls').classList.remove('game-active');
     if (world) world.stop();
     world = null;
 }
@@ -144,4 +147,27 @@ function openControlsDialog() {
 
 function closeControlsDialog() {
     document.getElementById('controlsDialog').close();
+}
+
+function bindMobileButton(buttonId, keyboardProp) {
+    const btn = document.getElementById(buttonId);
+    btn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard[keyboardProp] = true;
+    });
+    btn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard[keyboardProp] = false;
+    });
+    btn.addEventListener('touchcancel', (e) => {
+        e.preventDefault();
+        keyboard[keyboardProp] = false;
+    });
+}
+
+function bindMobileControls() {
+    bindMobileButton('btnLeft', 'LEFT');
+    bindMobileButton('btnRight', 'RIGHT');
+    bindMobileButton('btnJump', 'UP');
+    bindMobileButton('btnThrow', 'SPACE');
 }
