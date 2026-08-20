@@ -215,13 +215,13 @@ canvas {
 
 .mobile-controls-group {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     pointer-events: auto; /* Buttons wieder klickbar */
 }
 
 .mobile-btn {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.4);
     border: 2px solid white;
@@ -246,6 +246,10 @@ canvas {
 
 .mobile-btn:active {
     background: rgba(233, 102, 9, 0.8); /* gleiche Hover-Farbe wie bei euren anderen Buttons */
+}
+
+.mobile-btn.pressed {
+    background: rgba(233, 102, 9, 0.8);
 }
 /* Mobile controls End */
 
@@ -295,6 +299,21 @@ canvas {
   @media (orientation: landscape) {
     .mobile_buttons.game-active {
       display: flex;
+    }
+
+    .hud-corner.bottom-right {
+      top: 10px;
+      bottom: auto;
+      right: 10px;
+    }
+
+    .hud-corner.bottom-right img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .hud-corner.bottom-right button {
+      padding: 12px;
     }
   }
 

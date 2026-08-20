@@ -154,14 +154,17 @@ function bindMobileButton(buttonId, keyboardProp) {
     btn.addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard[keyboardProp] = true;
+        btn.classList.add('pressed');
     });
     btn.addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard[keyboardProp] = false;
+        btn.classList.remove('pressed');
     });
     btn.addEventListener('touchcancel', (e) => {
         e.preventDefault();
         keyboard[keyboardProp] = false;
+        btn.classList.remove('pressed');
     });
 }
 
