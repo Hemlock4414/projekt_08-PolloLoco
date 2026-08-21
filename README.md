@@ -6,7 +6,7 @@ and object-oriented programming. Player Pepe collects coins and bottles, fights 
 defeats a final boss.
 
 ## Screenshot
-![Gameplay Screenshot](img/screenshot/thumbnail_elpolloloco.png)
+![Gameplay Screenshot](assets/img/screenshot/thumbnail_elpolloloco.png)
 
 ## Built With
 - HTML5 (Canvas)
