@@ -6,7 +6,7 @@ class Coin extends CollidableObject {
     height = 120;
     width = 120;
 
-    static pickup_sound = new Audio('audio/coin-pickup-sfx-2.wav');
+    static pickup_sound = new Audio('assets/audio/coin-pickup-sfx-2.wav');
 
     offset = {
         top: 40,
@@ -16,8 +16,8 @@ class Coin extends CollidableObject {
     };
 
     IMAGES = [
-        'img/8_coin/coin_1.png',
-        'img/8_coin/coin_2.png'
+        'assets/img/8_coin/coin_1.png',
+        'assets/img/8_coin/coin_2.png'
     ];
 
     /**

@@ -39,8 +39,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.gameWonImage.src = 'img/You won, you lost/You won A.png';
-        this.gameLostImage.src = 'img/You won, you lost/Game Over.png';
+        this.gameWonImage.src = 'assets/img/You won, you lost/You won A.png';
+        this.gameLostImage.src = 'assets/img/You won, you lost/Game Over.png';
         this.draw();
         this.setWorld();
         this.totalCoins = this.level.coins.length;

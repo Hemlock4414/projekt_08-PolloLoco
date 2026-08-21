@@ -3,7 +3,7 @@ let fullscreen = false;
 let world;
 let keyboard = new Keyboard();
 
-let soundtrack = new Audio('audio/soft-mexican-guitar.mp3');
+let soundtrack = new Audio('assets/audio/soft-mexican-guitar.mp3');
 soundtrack.loop = true;
 soundtrack.muted = true;
 let soundMuted = true;
@@ -87,11 +87,11 @@ document.addEventListener('fullscreenchange', () => {
     let icon = document.getElementById('fullscreenIcon');
     if (document.fullscreenElement) {
         addFullscreenStyle();
-        icon.src = 'img/icons/icons8-normal-screen-48.png';
+        icon.src = 'assets/img/icons/icons8-normal-screen-48.png';
         icon.alt = 'Exit fullscreen';
     } else {
         removeFullscreenStyle();
-        icon.src = 'img/icons/icons8-full-screen-48.png';
+        icon.src = 'assets/img/icons/icons8-full-screen-48.png';
         icon.alt = 'Fullscreen';
     }
 });
@@ -144,7 +144,7 @@ function toggleMute() {
     soundMuted = !soundMuted;
     soundtrack.muted = soundMuted;
     let icon = document.getElementById('muteIcon');
-    icon.src = soundMuted ? 'img/icons/icons8-mute-50.png' : 'img/icons/icons8-audio-50.png';
+    icon.src = soundMuted ? 'assets/img/icons/icons8-mute-50.png' : 'assets/img/icons/icons8-audio-50.png';
     icon.alt = soundMuted ? 'Mute' : 'Unmute';
 }
 

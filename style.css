@@ -4,7 +4,7 @@
   font-family: 'Rye';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/rye-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('../assets/fonts/rye-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* luckiest-guy-regular - latin */
@@ -13,7 +13,7 @@
   font-family: 'Luckiest Guy';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/luckiest-guy-v25-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('../assets/fonts/luckiest-guy-v25-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 body {
@@ -22,7 +22,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-image: url('img/backdrop/desert.svg');
+    background-image: url('assets/img/backdrop/desert.svg');
     background-size: cover;
     background-position: center;
 }
@@ -50,7 +50,7 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
+    background-image: url('assets/img/9_intro_outro_screens/start/startscreen_1.png');
     background-size: cover;
     background-position: center;
     display: flex;
