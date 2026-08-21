@@ -10,7 +10,7 @@ let world;
 
 let keyboard = new Keyboard();
 
-let soundtrack = new Audio('audio/mexican-guitar.mp3');
+let soundtrack = new Audio('audio/soft-mexican-guitar.mp3');
 soundtrack.loop = true;
 soundtrack.muted = true;
 
