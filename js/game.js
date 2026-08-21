@@ -149,6 +149,14 @@ function closeControlsDialog() {
     document.getElementById('controlsDialog').close();
 }
 
+function openLegalDialog() {
+    document.getElementById('legalDialog').showModal();
+}
+
+function closeLegalDialog() {
+    document.getElementById('legalDialog').close();
+}
+
 function bindMobileButton(buttonId, keyboardProp) {
     const btn = document.getElementById(buttonId);
     btn.addEventListener('touchstart', (e) => {
