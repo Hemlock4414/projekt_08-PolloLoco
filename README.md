@@ -2,8 +2,7 @@
 
 ## Project Goal
 A 2D jump-and-run game built with vanilla JavaScript 
-and object-oriented programming, developed as part of the Developer Akademie 
-curriculum. Player Pepe collects coins and bottles, fights enemies, and 
+and object-oriented programming. Player Pepe collects coins and bottles, fights enemies, and 
 defeats a final boss.
 
 ## Screenshot
