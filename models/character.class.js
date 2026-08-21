@@ -1,3 +1,8 @@
+/**
+ * Represents the main playable character.
+ *
+ * Handles movement, animations, sounds and camera movement.
+ */
 class Character extends MovableObject {
 
     height = 280;
@@ -5,7 +10,7 @@ class Character extends MovableObject {
     x = 0;
     world;
 
-    ANIMATION_SPEED = 12; // höher = langsamer, nur für Character
+    ANIMATION_SPEED = 12;
 
     offset = {
         top: 120,
@@ -88,6 +93,9 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ]
 
+    /**
+     * Creates a new character and initializes its animations and sounds.
+     */
     constructor() {
         super().loadImage(this.IMAGES_IDLE_SHORT[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -102,96 +110,199 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Starts the character's movement and animation loops.
+     */
     animate() {
-
-         this.movementInterval = setInterval( () => {
-            if (this.world && this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.startWalkingSound();
-            }
-            if(this.world && this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true; // Charakter schaut nach links durch Spiegeln
-                this.startWalkingSound();
-            }
-
-            if(this.world && this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-                playSound(this.jump_sound);
-            }
-
-            if (this.world) {
-                let targetOffset = this.otherDirection
-                    ? this.world.canvas.width - 300 - this.width    // = 520, Charakter näher am rechten Rand → mehr Sicht nach links
-                    : 150;                                          // Charakter näher am linken Rand → mehr Sicht nach rechts
-                let targetCameraX = -this.x + targetOffset;
-
-                let smoothing = 0.25; // 0 = keine Bewegung, 1 = sofortiger Sprung (aktuelles Verhalten)
-                this.world.camera_x += (targetCameraX - this.world.camera_x) * smoothing;
-            }
-        }, 1000 / 60); // 60 fps
+        this.movementInterval = setInterval(() => {
+            this.handleMovement();
+            this.handleCamera();
+        }, 1000 / 60);
 
         this.animationInterval = setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                this.stopWalkingSound();
-                this.stopIdleLongSound();
-                this.wasIdleLong = false;
-                if (!this.wasDead) playSound(this.dead_sound);
-                this.wasDead = true;
-
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-                this.stopWalkingSound();
-                this.stopIdleLongSound();
-                this.wasIdleLong = false;
-                this.lastMoveTime = Date.now();
-                if (!this.wasHurt) playSound(this.hurt_sound);
-                this.wasHurt = true;
-
-            } else if (this.isAboveGround() || this.speedY > 0) {
-                this.playAnimation(this.IMAGES_JUMPING);
-                this.stopWalkingSound();
-                this.stopIdleLongSound();
-                this.wasIdleLong = false;
-                this.wasHurt = false;
-                this.wasDead = false;
-                this.lastMoveTime = Date.now();
-
-            } else {
-                this.wasHurt = false;
-                this.wasDead = false;
-
-                if (this.world && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                    this.lastMoveTime = Date.now(); // lastMoveTime wird nur bei Bewegung aktualisiert
-                    this.stopIdleLongSound();
-                    this.wasIdleLong = false;
-                } else {
-                    this.stopWalkingSound();
-                    let idleTime = Date.now() - this.lastMoveTime;
-                    if (idleTime > 15000) {
-                        this.playAnimation(this.IMAGES_IDLE_LONG);
-                        if (!this.wasIdleLong) playSound(this.idle_long_sound);
-                        this.wasIdleLong = true;
-                    } else {
-                        this.playAnimation(this.IMAGES_IDLE_SHORT);
-                        this.stopIdleLongSound();
-                        this.wasIdleLong = false;
-                    }
-                }
-            }
+            this.handleAnimation();
         }, 1000 / 60);
     }
 
-    // Prüft, ob der Character von oben auf einen Gegner fällt (Sprung-Treffer)
+    /**
+     * Handles character movement based on keyboard input.
+     */
+    handleMovement() {
+        if (!this.world) return;
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.startWalkingSound();
+        }
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.startWalkingSound();
+        }
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jump();
+            playSound(this.jump_sound);
+        }
+    }
+
+    /**
+     * Updates the camera position to follow the character.
+     */
+    handleCamera() {
+        if (!this.world) return;
+
+        let targetOffset = this.otherDirection
+            ? this.world.canvas.width - 300 - this.width
+            : 150;
+
+        let targetCameraX = -this.x + targetOffset;
+
+        let smoothing = 0.25;
+
+        this.world.camera_x +=
+            (targetCameraX - this.world.camera_x) * smoothing;
+    }
+
+    /**
+     * Updates the character's animation based on its current state.
+     */
+    handleAnimation() {
+        if (this.isDead()) {
+            this.handleDeadAnimation();
+        } else if (this.isHurt()) {
+            this.handleHurtAnimation();
+        } else if (this.isAboveGround() || this.speedY > 0) {
+            this.handleJumpAnimation();
+        } else if (this.world && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
+            this.handleWalkingAnimation();
+        } else {
+            this.handleIdleAnimation();
+        }
+    }
+
+    /**
+     * Handles the character's death animation and sound.
+     */
+    handleDeadAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+
+        this.stopWalkingSound();
+        this.stopIdleLongSound();
+
+        this.wasIdleLong = false;
+
+        if (!this.wasDead) {
+            playSound(this.dead_sound);
+        }
+
+        this.wasDead = true;
+    }
+
+    /**
+     * Handles the character's hurt animation and sound.
+     */
+    handleHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+
+        this.stopWalkingSound();
+        this.stopIdleLongSound();
+
+        this.wasIdleLong = false;
+        this.lastMoveTime = Date.now();
+
+        if (!this.wasHurt) {
+            playSound(this.hurt_sound);
+        }
+
+        this.wasHurt = true;
+    }
+
+    /**
+     * Handles the character's jumping animation.
+     */
+    handleJumpAnimation() {
+        this.playAnimation(this.IMAGES_JUMPING);
+
+        this.stopWalkingSound();
+        this.stopIdleLongSound();
+
+        this.wasIdleLong = false;
+        this.wasHurt = false;
+        this.wasDead = false;
+        this.lastMoveTime = Date.now();
+    }
+
+    /**
+     * Handles the character's walking animation.
+     */
+    handleWalkingAnimation() {
+        this.playAnimation(this.IMAGES_WALKING);
+
+        this.lastMoveTime = Date.now();
+
+        this.stopIdleLongSound();
+        this.wasIdleLong = false;
+
+        this.wasHurt = false;
+        this.wasDead = false;
+    }
+
+    /**
+     * Handles the character's idle animations.
+     *
+     * Switches between short and long idle animations
+     * depending on how long the character has been inactive.
+     */
+    handleIdleAnimation() {
+        this.stopWalkingSound();
+
+        let idleTime = Date.now() - this.lastMoveTime;
+
+        if (idleTime > 15000) {
+            this.handleLongIdle();
+        } else {
+            this.handleShortIdle();
+        }
+    }
+
+    /**
+     * Plays the long idle animation and sound.
+     */
+    handleLongIdle() {
+        this.playAnimation(this.IMAGES_IDLE_LONG);
+
+        if (!this.wasIdleLong) {
+            playSound(this.idle_long_sound);
+        }
+
+        this.wasIdleLong = true;
+    }
+
+    /**
+     * Plays the short idle animation.
+     */
+    handleShortIdle() {
+        this.playAnimation(this.IMAGES_IDLE_SHORT);
+
+        this.stopIdleLongSound();
+        this.wasIdleLong = false;
+    }
+
+    /**
+     * Checks whether the character is stomping an enemy.
+     *
+     * @param {MovableObject} enemy - The enemy being checked.
+     * @returns {boolean} True if the character is stomping the enemy.
+     */
     isStomping(enemy) {
         let characterBottom = this.y + this.height;
         let enemyTop = enemy.y;
         return this.speedY < 0 && characterBottom < enemyTop + (enemy.height / 2);
     }
     
+    /**
+     * Starts the walking sound if sound is not muted.
+     */
     startWalkingSound() {
         if (soundMuted) return;
         if (this.walking_sound.paused) {
@@ -199,16 +310,25 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Stops the walking sound and resets its playback position.
+     */
     stopWalkingSound() {
         this.walking_sound.pause();
         this.walking_sound.currentTime = 0;
     }
 
+    /**
+     * Stops the long idle sound and resets its playback position.
+     */
     stopIdleLongSound() {
         this.idle_long_sound.pause();
         this.idle_long_sound.currentTime = 0;
     }
 
+    /**
+     * Stops the character's movement and animation loops.
+     */
     stop() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);
@@ -216,6 +336,11 @@ class Character extends MovableObject {
         this.stopIdleLongSound();
     }
 
+    /**
+     * Plays the next frame of the specified animation.
+     *
+     * @param {string[]} images - The image paths of the animation.
+     */
     playAnimation(images) {
         this.animationCounter = (this.animationCounter || 0) + 1;
         if (this.animationCounter % this.ANIMATION_SPEED !== 0) return;

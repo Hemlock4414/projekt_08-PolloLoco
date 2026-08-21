@@ -24,7 +24,6 @@ body {
     margin: 0;
     background-image: url('img/backdrop/desert.svg');
     background-size: cover;
-    /* background-repeat: no-repeat; */
     background-position: center;
 }
 
@@ -35,7 +34,7 @@ h1 {
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-#fullscreen {
+.fullscreen {
     position: relative;
     display: inline-block;
 }
@@ -45,7 +44,7 @@ canvas {
     display: block;
 }
 
-#startScreen {
+.start-screen {
     position: absolute;
     top: 0;
     left: 0;
@@ -74,7 +73,6 @@ canvas {
 
 .primary-btn:hover {
     background: rgba(233, 102, 9, 0.8);
-    /* background: rgba(0, 0, 0, 0.75); */
 }
 
 .restart-btn {
@@ -113,7 +111,6 @@ canvas {
 
 .hud-corner button:hover {
     background: rgba(233, 102, 9, 0.8);
-    /* background: rgba(0, 0, 0, 0.6); */
 }
 
 .hud-corner.top-left {
@@ -250,7 +247,7 @@ canvas {
 
 /* Mobile controls */
 .mobile_buttons {
-    display: none; /* Basis: aus, wird per pointer:coarse-Query eingeblendet */
+    display: none;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -258,14 +255,14 @@ canvas {
     justify-content: space-between;
     padding: 0 16px 16px;
     box-sizing: border-box;
-    z-index: 15; /* über hud-corner (10), unter turn-device (999) */
-    pointer-events: none; /* Container selbst nicht klickbar, nur Kinder */
+    z-index: 15;
+    pointer-events: none;
 }
 
 .mobile-controls-group {
     display: flex;
     gap: 20px;
-    pointer-events: auto; /* Buttons wieder klickbar */
+    pointer-events: auto;
 }
 
 .mobile-btn {
@@ -278,14 +275,14 @@ canvas {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    touch-action: manipulation; /* verhindert Doppel-Tap-Zoom/Delay */
+    touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-btn img {
     width: 28px;
     height: 28px;
-    pointer-events: none; /* Icon soll Klick nicht "stehlen" */
+    pointer-events: none;
 }
 
 .throw-btn img {
@@ -294,7 +291,7 @@ canvas {
 }
 
 .mobile-btn:active {
-    background: rgba(233, 102, 9, 0.8); /* gleiche Hover-Farbe wie bei euren anderen Buttons */
+    background: rgba(233, 102, 9, 0.8);
 }
 
 .mobile-btn.pressed {

@@ -1,3 +1,8 @@
+/**
+ * Represents a drawable object in the game.
+ *
+ * Provides basic image loading and rendering functionality.
+ */
 class DrawableObject {
     img;
     imageCache = [];
@@ -7,11 +12,21 @@ class DrawableObject {
     height = 150;
     width = 100;
 
+    /**
+     * Loads an image from the specified path.
+     *
+     * @param {string} path - The path to the image.
+     */
     loadImage(path) {
-        this.img = new Image(); // entspricht -> this.img = document.getElementById('myImage') <img id="image">;
+        this.img = new Image();
         this.img.src = path;
     }
 
+    /**
+     * Draws the object on the canvas.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx) {
 
         try {
@@ -21,30 +36,34 @@ class DrawableObject {
             console.log('Could not load image, ', this.img.src);
         }
     }
-    
-    drawFrame(ctx) {
 
-        // Begrenzen auf welche Objekte das Kollisionsrechteck gezeichnet werden soll
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle ) {  
-
-            ctx.beginPath();   // Kollisionsrechteck zeichnen
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height); // Kollisionsrechteck mit Start-/Endpunkten des jeweiligen Objekts
-            ctx.stroke();
-            // this.ctx.rect(50, 50, 150, 80); zu Testzwecken
-        }
-    }
-    
     /**
-     * 
-     * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
+     * Loads multiple images into the image cache.
+     *
+     * @param {string[]} arr - An array of image paths.
      */
     loadImages(arr) {
         arr.forEach((path) => {
         let img = new Image();
         img.src = path;
-        this.imageCache[path] = img;  // JSON
+        this.imageCache[path] = img;
         });
+    }
+    
+    /**
+     * Draws the collision frame of supported game objects.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
+    drawFrame(ctx) {
+
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle ) {  
+
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
     }
 }

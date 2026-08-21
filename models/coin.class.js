@@ -1,3 +1,6 @@
+/**
+ * Represents a collectible coin in the game.
+ */
 class Coin extends CollidableObject {
 
     height = 120;
@@ -17,13 +20,19 @@ class Coin extends CollidableObject {
         'img/8_coin/coin_2.png'
     ];
 
+    /**
+     * Creates a new coin at a calculated position.
+     *
+     * @param {number} index - The position index of the coin.
+     * @param {number} total - The total number of coins.
+     */
     constructor(index = 0, total = 10) {
         super().loadImage(this.IMAGES[0]);
 
         this.loadImages(this.IMAGES);
 
         const startX = 200;
-        const maxX = 1900; // bewusster Sicherheitsabstand vor dem Endboss (x = 2200)
+        const maxX = 1900;
         const spacing = (maxX - startX) / (total - 1);
 
         this.x = startX + index * spacing + Math.random() * (spacing * 0.3);
@@ -33,6 +42,9 @@ class Coin extends CollidableObject {
         this.animate();
     }
 
+    /**
+     * Animates the coin by cycling through its images.
+     */
     animate() {
         setInterval(() => {
             this.currentImage = (this.currentImage + 1) % this.IMAGES.length;

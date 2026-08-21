@@ -1,3 +1,8 @@
+/**
+ * Represents the endboss of the game.
+ *
+ * Handles movement, attacks, animations and health.
+ */
 class Endboss extends MovableObject {
 
     height = 400;
@@ -6,13 +11,13 @@ class Endboss extends MovableObject {
 
     energy = 100;
     speed = 4;
-    damage = 20;   // Schaden pro Flaschentreffer
+    damage = 20;
 
-    alertRange = 500;    // Abstand, ab dem der Boss den Character bemerkt
-    attackRange = 250;   // Abstand, ab dem der Boss angreift statt zu laufen
+    alertRange = 500;
+    attackRange = 250;
 
-    isAlerted = false;   // wurde der Boss schon "geweckt"?
-    isMoving = false;    // läuft der Boss gerade auf den Character zu?
+    isAlerted = false;
+    isMoving = false;
 
     hasDied = false;
     deadAnimationIndex = 0;
@@ -62,8 +67,11 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
 
+    /**
+     * Creates a new endboss and loads its animations.
+     */
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]); // Boss steht zunächst bewegungslos da
+        super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
@@ -73,41 +81,59 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Starts the endboss movement and animation loops.
+     */
     animate() {
-
-        // Bewegungslogik: prüft Alarm-Zustand und bewegt den Boss auf den Character zu
         setInterval(() => {
-            if (this.isDead()) return;
-
-            if (!this.isAlerted) {
-                this.checkAlert();
-            } else if (this.isMoving && !this.isHurt() && !this.isTouchingCharacter()) {
-                if (this.world.character.x < this.x) {
-                    this.moveLeft();
-                    this.otherDirection = false;
-                } else {
-                    this.moveRight();
-                    this.otherDirection = true;
-                }
-            }
+            this.handleMovement();
         }, 1000 / 60);
 
-        // Animationslogik: wählt je nach Zustand das passende Bildset
         setInterval(() => {
-            if (this.isDead()) {
-                this.playDeadAnimation();
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (!this.isAlerted) {
-                // Boss steht still, keine laufende Animation nötig
-            } else if (this.isInAttackRange()) {
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
+            this.handleAnimation();
         }, 150);
     }
 
+    /**
+     * Handles the endboss movement and alert state.
+     */
+    handleMovement() {
+        if (this.isDead()) return;
+        if (!this.isAlerted) {
+            this.checkAlert();
+            return;
+        }
+        if (this.isMoving && !this.isHurt() && !this.isTouchingCharacter()) {
+            if (this.world.character.x < this.x) {
+                this.moveLeft();
+                this.otherDirection = false;
+            } else {
+                this.moveRight();
+                this.otherDirection = true;
+            }
+        }
+    }
+
+    /**
+     * Updates the endboss animation based on its current state.
+     */
+    handleAnimation() {
+        if (this.isDead()) {
+            this.playDeadAnimation();
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (!this.isAlerted) {
+            return;
+        } else if (this.isInAttackRange()) {
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+    /**
+     * Reduces the endboss energy and plays the corresponding sound.
+     */
     hit() {
         this.energy -= this.damage;
         if (this.energy <= 0) {
@@ -119,7 +145,9 @@ class Endboss extends MovableObject {
         this.lastHit = new Date().getTime();
     }
 
-    // Prüft die Distanz zum Character, löst bei Unterschreitung die Alert-Animation aus
+    /**
+     * Checks whether the character is within the alert range.
+     */
     checkAlert() {
         if (!this.world) return;
         let distance = Math.abs(this.x - this.world.character.x);
@@ -130,7 +158,9 @@ class Endboss extends MovableObject {
         }
     }
 
-    // Spielt die Alert-Bilder einmal komplett durch, danach beginnt die Bewegung
+    /**
+     * Plays the alert animation and starts movement afterwards.
+     */
     playAlertAnimation() {
         let i = 0;
         let alertInterval = setInterval(() => {
@@ -143,21 +173,28 @@ class Endboss extends MovableObject {
         }, 150);
     }
 
+    /**
+     * Checks whether the character is within attack range.
+     *
+     * @returns {boolean} True if the character is within attack range.
+     */
     isInAttackRange() {
         if (!this.world) return false;
         let character = this.world.character;
         let distance;
         if (this.x < character.x) {
-            // Boss kommt von links: Abstand rechter Boss-Rahmen -> linker Character-Rahmen
             distance = character.x - (this.x + this.width);
         } else {
-            // Boss kommt von rechts: Abstand linker Boss-Rahmen -> rechter Character-Rahmen
             distance = this.x - (character.x + character.width);
         }
         return distance < this.attackRange;
     }
 
-    // Prüft echten Rahmen-Kontakt mit dem Character, unabhängig von der Anlaufrichtung
+    /**
+     * Checks whether the endboss is touching the character.
+     *
+     * @returns {boolean} True if the endboss is touching the character.
+     */
     isTouchingCharacter() {
         let character = this.world.character;
         return this.x < character.x + character.width &&
@@ -166,6 +203,9 @@ class Endboss extends MovableObject {
             this.y + this.height > character.y;
     }
 
+    /**
+     * Plays the endboss death animation frame by frame.
+     */
     playDeadAnimation() {
         if (this.hasDied) return;
         if (this.deadAnimationIndex >= this.IMAGES_DEAD.length) {

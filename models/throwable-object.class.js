@@ -1,3 +1,7 @@
+/**
+ * Represents a throwable bottle that can rotate in the air
+ * and create a splash effect when it hits the ground.
+ */
 class ThrowableObject extends MovableObject {
 
     isSplashing = false;
@@ -21,6 +25,13 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
 
+    /**
+     * Creates a new throwable bottle.
+     *
+     * @param {number} x - The starting x-position.
+     * @param {number} y - The starting y-position.
+     * @param {'left'|'right'} direction - The throwing direction.
+     */
     constructor(x, y, direction = 'right') {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
 
@@ -31,7 +42,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
-        this.groundY = 370; // gleiche Bodenhöhe wie die liegende Flasche
+        this.groundY = 370;
         this.direction = direction;
 
         this.throw();
@@ -40,22 +51,29 @@ class ThrowableObject extends MovableObject {
         this.splash_sound.volume = 0.4;
     }
 
+    /**
+     * Starts the splash animation when the bottle hits the ground.
+     */
     onGroundHit() {
-        // Flasche ist am Boden aufgeschlagen, ohne Gegner getroffen zu haben
         this.playSplash(() => { this.hasHit = true; });
     }
 
+    /**
+     * Throws the bottle in the specified direction.
+     */
     throw() {
-        this.speedY = 20;   // initiale Wurfgeschwindigkeit nach oben
+        this.speedY = 20;
         this.applyGravity();
         this.throwInterval = setInterval(() => {
             if (!this.isSplashing) {
-                this.x += this.direction === 'left' ? -10 : 10;   // horizontale Geschwindigkeit nach rechts
+                this.x += this.direction === 'left' ? -10 : 10;
             }
         }, 25);
     }
 
-    // Rotation, solange die Flasche fliegt
+    /**
+     * Starts the bottle rotation animation.
+     */
     animate() {
         this.rotationInterval = setInterval(() => {
             if (!this.isSplashing) {
@@ -64,11 +82,15 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 60);
     }
 
-    // Wird von außen (World) beim Treffer aufgerufen
+    /**
+     * Plays the splash animation after the bottle hits the ground.
+     *
+     * @param {Function} onComplete - Callback executed after the animation finishes.
+     */
     playSplash(onComplete) {
-        if (this.isSplashing) return; // nicht doppelt starten
+        if (this.isSplashing) return;
         this.isSplashing = true;
-        this.speedY = 0; // Flasche bleibt an Ort und Stelle stehen für den Splash
+        this.speedY = 0;
         playSound(this.splash_sound);
 
         let i = 0;
@@ -80,10 +102,12 @@ class ThrowableObject extends MovableObject {
                 this.stop();
                 if (onComplete) onComplete();
             }
-        }, 1000 / 20); // etwas langsamer, damit der Splash sichtbar ist (~300ms gesamt)
+        }, 1000 / 20);
     }
 
-    // Räumt alle Intervalle der Flasche auf (verhindert das Leak von vorher)
+    /**
+     * Stops the bottle's movement and rotation intervals.
+     */
     stop() {
         clearInterval(this.throwInterval);
         clearInterval(this.rotationInterval);

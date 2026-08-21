@@ -1,3 +1,6 @@
+/**
+ * Represents a small chicken enemy.
+ */
 class ChickenSmall extends Chicken {
 
     y = 370;
@@ -14,8 +17,11 @@ class ChickenSmall extends Chicken {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
+    /**
+     * Creates a new small chicken enemy.
+     */
     constructor() {
-        super(); // lädt bereits Position, Speed, Animation über Chicken-Konstruktor
+        super();
         this.loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);

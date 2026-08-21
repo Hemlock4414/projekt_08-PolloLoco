@@ -1,26 +1,32 @@
 let canvas;
-
 let fullscreen = false;
-
-let soundMuted = true;
-
-// ctx = context
-
 let world;
-
 let keyboard = new Keyboard();
 
 let soundtrack = new Audio('audio/soft-mexican-guitar.mp3');
 soundtrack.loop = true;
 soundtrack.muted = true;
+let soundMuted = true;
 
+/**
+ * Initializes the game.
+ *
+ * Gets the canvas element, starts the soundtrack, and
+ * binds the controls for mobile devices.
+ */
 function init() {
     canvas = document.getElementById('myCanvas');
     soundtrack.play().catch(() => {});
     // soundtrack.play().catch(err => console.warn('Soundtrack play failed:', err.name, err.message));
-    bindMobileControls();
+    keyboard.bindMobileControls();
 }
 
+/**
+ * Starts the game and initializes the current level.
+ *
+ * Hides the start screen, activates the mobile controls,
+ * and creates a new World instance.
+ */
 function startGame() {
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('mobileControls').classList.add('game-active');
@@ -28,35 +34,9 @@ function startGame() {
     world = new World(canvas, keyboard);
 }
 
-// Listen for keyboard events
-window.addEventListener('keydown', (event) => {
-    if (event.code === "ArrowRight") {
-        keyboard.RIGHT = true;
-    }
-    if (event.code === "ArrowLeft") {
-        keyboard.LEFT  = true;
-    }
-    if (event.code === "ArrowUp") {
-        keyboard.UP    = true;
-    }
-    if (event.code === "Space") {
-        keyboard.SPACE = true;
-    }
-});
-
-// Beides ist funktional exakt gleich. Der Unterschied ist nur Schreibstil, nicht Verhalten.
-// Wenn ein if genau eine Anweisung ausführt, dürfen die geschweiften Klammern weggelassen werden.
-
-window.addEventListener('keyup', (event) => {
-    if (event.code === "ArrowRight") keyboard.RIGHT = false;
-    if (event.code === "ArrowLeft")  keyboard.LEFT  = false;
-    if (event.code === "ArrowUp")    keyboard.UP    = false;
-    if (event.code === "Space")      keyboard.SPACE = false;
-});
-
-// 20, 20, 50, 150);  x-axis, y-axis, width, height
-
-// Fullscreen
+/**
+ * Toggles fullscreen mode.
+ */
 function toggleFullscreen() {
     if (document.fullscreenElement) {
         exitFullscreen();
@@ -65,6 +45,11 @@ function toggleFullscreen() {
     }
 }
 
+/**
+ * Enables fullscreen mode for the specified element.
+ *
+ * @param {HTMLElement} element - The element to display in fullscreen mode.
+ */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -77,6 +62,9 @@ function enterFullscreen(element) {
     }
 }
 
+/**
+ * Exits fullscreen mode.
+ */
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -89,6 +77,12 @@ function exitFullscreen() {
     }
 }
 
+/**
+ * Handles changes to the fullscreen state.
+ *
+ * Updates the canvas and fullscreen icon according to
+ * the current fullscreen state.
+ */
 document.addEventListener('fullscreenchange', () => {
     let icon = document.getElementById('fullscreenIcon');
     if (document.fullscreenElement) {
@@ -102,23 +96,37 @@ document.addEventListener('fullscreenchange', () => {
     }
 });
 
+/**
+ * Adjusts the canvas to fullscreen mode.
+ */
 function addFullscreenStyle() {
     fullscreen = true;
     canvas.style.width = '100%';
     canvas.style.height = '100%';
 }
 
+/**
+ * Resets the canvas size to its default values.
+ */
 function removeFullscreenStyle() {
     fullscreen = false;
     canvas.style.width = '';
     canvas.style.height = '';
 }
-// End Fullscreen
 
+/**
+ * Displays the restart button.
+ */
 function showRestartButton() {
     document.getElementById('hudControls-topLeft').style.display = 'flex';
 }
 
+/**
+ * Resets the game and displays the start screen.
+ *
+ * Stops the current World instance if one exists and
+ * deactivates the mobile controls.
+ */
 function restart() {
     document.getElementById('hudControls-topLeft').style.display = 'none';
     document.getElementById('startScreen').style.display = 'flex';
@@ -127,6 +135,11 @@ function restart() {
     world = null;
 }
 
+/**
+ * Toggles the sound on or off.
+ *
+ * Updates the mute button icon accordingly.
+ */
 function toggleMute() {
     soundMuted = !soundMuted;
     soundtrack.muted = soundMuted;
@@ -135,50 +148,43 @@ function toggleMute() {
     icon.alt = soundMuted ? 'Mute' : 'Unmute';
 }
 
+/**
+ * Plays a sound if sound is not muted.
+ *
+ * Resets the playback position to the beginning before playing.
+ *
+ * @param {HTMLAudioElement} audio - The audio element to play.
+ */
 function playSound(audio) {
     if (soundMuted) return;
     audio.currentTime = 0;
     audio.play().catch(() => {});
 }
 
+/**
+ * Opens the controls dialog.
+ */
 function openControlsDialog() {
     document.getElementById('controlsDialog').showModal();
 }
 
+/**
+ * Closes the controls dialog.
+ */
 function closeControlsDialog() {
     document.getElementById('controlsDialog').close();
 }
 
+/**
+ * Opens the legal information dialog.
+ */
 function openLegalDialog() {
     document.getElementById('legalDialog').showModal();
 }
 
+/**
+ * Closes the legal information dialog.
+ */
 function closeLegalDialog() {
     document.getElementById('legalDialog').close();
-}
-
-function bindMobileButton(buttonId, keyboardProp) {
-    const btn = document.getElementById(buttonId);
-    btn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard[keyboardProp] = true;
-        btn.classList.add('pressed');
-    });
-    btn.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard[keyboardProp] = false;
-        btn.classList.remove('pressed');
-    });
-    btn.addEventListener('touchcancel', (e) => {
-        e.preventDefault();
-        keyboard[keyboardProp] = false;
-        btn.classList.remove('pressed');
-    });
-}
-
-function bindMobileControls() {
-    bindMobileButton('btnLeft', 'LEFT');
-    bindMobileButton('btnRight', 'RIGHT');
-    bindMobileButton('btnJump', 'UP');
-    bindMobileButton('btnThrow', 'SPACE');
 }

@@ -1,3 +1,8 @@
+/**
+ * Represents a chicken enemy.
+ *
+ * Handles movement, animations and death behavior.
+ */
 class Chicken extends MovableObject {
 
     y = 330;
@@ -13,17 +18,23 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
 
-    hasDied = false; // verhindert, dass das Entfernen mehrfach ausgelöst wird
+    hasDied = false;
 
+    /**
+     * Sets the chicken's energy to zero.
+     */
     hit() {
         this.energy = 0;
     }
 
+    /**
+     * Creates a new chicken enemy at a random position and speed.
+     */
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
 
-        this.x = 650 + Math.random() * 1100; // zufällige Startposition (zwischen 200 und 700) aller Chickens
-        this.speed = 0.20 + Math.random() * 0.30; // zufällige Geschwindigkeit aller Chickens
+        this.x = 650 + Math.random() * 1100;
+        this.speed = 0.20 + Math.random() * 0.30;
 
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
@@ -31,11 +42,14 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Starts the movement and animation loops of the chicken.
+     */
     animate() {
         setInterval(() => {
-            if (this.isDead()) return; // totes Chicken bewegt sich nicht mehr
+            if (this.isDead()) return;
             this.moveLeft();
-        }, 1000 / 60); // 60 fps
+        }, 1000 / 60);
 
         setInterval(() => {
             if (this.isDead()) {
@@ -46,7 +60,9 @@ class Chicken extends MovableObject {
         }, 100);
     }
 
-    // Zeigt einmalig das Dead-Bild und entfernt das Chicken nach 1 Sekunde aus dem Level
+    /**
+     * Plays the death animation and removes the chicken after a delay.
+     */
     playDeadAnimation() {
         if (this.hasDied) return;
         this.hasDied = true;

@@ -1,3 +1,6 @@
+/**
+ * Represents a status bar for health, bottles, coins or the endboss.
+ */
 class StatusBar extends DrawableObject {
 
     percentage = 100;
@@ -39,8 +42,15 @@ class StatusBar extends DrawableObject {
         'img/7_statusbars/2_statusbar_endboss/green/green100.png'
     ];
 
+    /**
+     * Creates a new status bar.
+     *
+     * @param {number} x - The x-position of the status bar.
+     * @param {number} y - The y-position of the status bar.
+     * @param {'health'|'bottle'|'coin'|'endboss'} type - The type of status bar.
+     */
     constructor(x, y, type) {
-        super();    // muss immer rein um die Methoden und Eigenschaften der Elternklasse (DrawableObject) zu erben bzw initialisieren
+        super();
 
         if (type === 'health') {
             this.IMAGES = this.IMAGES_HEALTH;
@@ -51,7 +61,7 @@ class StatusBar extends DrawableObject {
         } else if (type === 'endboss') {
             this.IMAGES = this.IMAGES_ENDBOSS;
         } else {
-            console.log('Unbekannter StatusBar-Typ:', type);
+            console.log('Unknown status bar type:', type);
         }
 
         this.loadImages(this.IMAGES);
@@ -62,12 +72,22 @@ class StatusBar extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Updates the status bar to the specified percentage.
+     *
+     * @param {number} percentage - The current percentage value.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Determines the image index based on the current percentage.
+     *
+     * @returns {number} The index of the image representing the percentage.
+     */
     resolveImageIndex() {
         if (this.percentage >= 100) return 5;
         else if (this.percentage >= 80) return 4;
