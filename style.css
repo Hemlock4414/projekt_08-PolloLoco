@@ -352,20 +352,38 @@ canvas {
     .mobile_buttons.game-active {
       display: flex;
     }
-
     .hud-corner.bottom-right {
       top: 10px;
       bottom: auto;
       right: 10px;
     }
-
     .hud-corner.bottom-right img {
       width: 26px;
       height: 26px;
     }
-
     .hud-corner.bottom-right button {
       padding: 8px;
+    }
+    /* Small devices */
+    @media (max-height: 450px) {
+      .mobile-btn {
+        width: 42px;
+        height: 42px;
+      }
+      .mobile-btn img {
+        width: 20px;
+        height: 20px;
+      }
+      .throw-btn img {
+        width: 9px;
+        height: 28px;
+      }
+      .mobile-controls-group {
+        gap: 20px;
+      }
+      .mobile_buttons {
+        padding: 0 10px 10px;
+      }
     }
   }
 
@@ -375,7 +393,6 @@ canvas {
       display: flex;
     }
   }
-
   .controls-info-btn {
     display: none;
   }
