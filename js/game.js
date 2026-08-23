@@ -16,6 +16,9 @@ let soundMuted = true;
  */
 function init() {
     canvas = document.getElementById('myCanvas');
+    soundMuted = localStorage.getItem('soundMuted') !== 'false';
+    soundtrack.muted = soundMuted;
+    updateMuteIcon();
     soundtrack.play().catch(() => {});
     // soundtrack.play().catch(err => console.warn('Soundtrack play failed:', err.name, err.message));
     keyboard.bindMobileControls();
@@ -157,6 +160,14 @@ function tryAgain() {
 function toggleMute() {
     soundMuted = !soundMuted;
     soundtrack.muted = soundMuted;
+    localStorage.setItem('soundMuted', soundMuted);
+    updateMuteIcon();
+}
+
+/**
+ * Updates the mute button icon according to the current mute state.
+ */
+function updateMuteIcon() {
     let icon = document.getElementById('muteIcon');
     icon.src = soundMuted ? 'assets/img/icons/icons8-mute-50.png' : 'assets/img/icons/icons8-audio-50.png';
     icon.alt = soundMuted ? 'Mute' : 'Unmute';
