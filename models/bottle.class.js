@@ -7,6 +7,13 @@ class Bottle extends CollidableObject {
     height = 70;
     width = 60;
 
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 10,
+        right: 10
+    };
+
     static pickup_sound = new Audio('assets/audio/bottle-collect.mp3');
 
     IMAGES = [

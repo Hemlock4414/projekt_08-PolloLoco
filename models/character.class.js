@@ -16,7 +16,7 @@ class Character extends MovableObject {
         top: 120,
         bottom: 0,
         left: 0,
-        right: 0
+        right: 30
     };
 
     walking_sound = new Audio('assets/audio/sandwalking_step.wav');

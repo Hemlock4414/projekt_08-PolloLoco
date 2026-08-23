@@ -22,6 +22,13 @@ class Endboss extends MovableObject {
     hasDied = false;
     deadAnimationIndex = 0;
 
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 30,
+        right: 30
+    };
+
     alert_sound = new Audio('assets/audio/endboss_alert.mp3');
     hurt_sound = new Audio('assets/audio/endboss-hurt.mp3');
     dead_sound = new Audio('assets/audio/endboss-death.mp3');
@@ -196,11 +203,7 @@ class Endboss extends MovableObject {
      * @returns {boolean} True if the endboss is touching the character.
      */
     isTouchingCharacter() {
-        let character = this.world.character;
-        return this.x < character.x + character.width &&
-            this.x + this.width > character.x &&
-            this.y < character.y + character.height &&
-            this.y + this.height > character.y;
+        return this.isColliding(this.world.character);
     }
 
     /**

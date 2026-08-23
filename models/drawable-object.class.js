@@ -55,14 +55,34 @@ class DrawableObject {
      *
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
      */
+    // drawFrame(ctx) {
+
+    //     if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle ) {  
+
+    //         ctx.beginPath();
+    //         ctx.lineWidth = '5';
+    //         ctx.strokeStyle = 'blue';
+    //         ctx.rect(this.x, this.y, this.width, this.height);
+    //         ctx.stroke();
+    //     }
+    // }
+
+    /**
+     * Draws the real collision frame of supported game objects including the offsets.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     drawFrame(ctx) {
-
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle ) {  
-
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(
+                this.x + this.offset.left,
+                this.y + this.offset.top,
+                this.width - this.offset.left - this.offset.right,
+                this.height - this.offset.top - this.offset.bottom
+            );
             ctx.stroke();
         }
     }
