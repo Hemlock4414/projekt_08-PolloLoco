@@ -20,7 +20,6 @@ function init() {
     soundtrack.muted = soundMuted;
     updateMuteIcon();
     soundtrack.play().catch(() => {});
-    // soundtrack.play().catch(err => console.warn('Soundtrack play failed:', err.name, err.message));
     keyboard.bindMobileControls();
 }
 
