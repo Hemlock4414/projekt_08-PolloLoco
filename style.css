@@ -357,12 +357,12 @@ canvas {
     }
 
     .hud-corner.bottom-right img {
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
     }
 
     .hud-corner.bottom-right button {
-      padding: 12px;
+      padding: 8px;
     }
   }
 

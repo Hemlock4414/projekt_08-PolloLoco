@@ -13,7 +13,7 @@ class World {
     statusBarHealth = new StatusBar(40, 0, 'health');
     statusBarCoin = new StatusBar(40, 50, 'coin');
     statusBarBottle = new StatusBar(40, 100, 'bottle');
-    statusBarEndboss = new StatusBar(480, 8, 'endboss');
+    statusBarEndboss = new StatusBar(480, 58, 'endboss');
     throwableObjects = [];
     lastThrowTime = 0;
     throwCooldownMs = 1500;
