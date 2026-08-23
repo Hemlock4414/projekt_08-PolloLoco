@@ -8,6 +8,9 @@ class Chicken extends MovableObject {
     y = 330;
     height = 100;
     width = 120;
+
+    hasDied = false;
+
     IMAGES_WALKING = [
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -17,15 +20,6 @@ class Chicken extends MovableObject {
     IMAGES_DEAD = [
         'assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
-
-    hasDied = false;
-
-    /**
-     * Sets the chicken's energy to zero.
-     */
-    hit() {
-        this.energy = 0;
-    }
 
     /**
      * Creates a new chicken enemy at a random position and speed.
@@ -58,6 +52,13 @@ class Chicken extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 100);
+    }
+
+    /**
+     * Sets the chicken's energy to zero.
+     */
+    hit() {
+        this.energy = 0;
     }
 
     /**

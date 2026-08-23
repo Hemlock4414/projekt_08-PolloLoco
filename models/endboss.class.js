@@ -11,7 +11,7 @@ class Endboss extends MovableObject {
 
     energy = 100;
     speed = 4;
-    damage = 20;
+    damage = 25;
 
     alertRange = 500;
     attackRange = 250;
@@ -216,4 +216,3 @@ class Endboss extends MovableObject {
         this.deadAnimationIndex++;
     }
 }
-
