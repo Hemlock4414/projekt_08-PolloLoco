@@ -161,6 +161,9 @@ function toggleMute() {
     soundMuted = !soundMuted;
     soundtrack.muted = soundMuted;
     localStorage.setItem('soundMuted', soundMuted);
+    if (!soundMuted && soundtrack.paused) {
+        soundtrack.play().catch(() => {});
+    }
     updateMuteIcon();
 }
 
