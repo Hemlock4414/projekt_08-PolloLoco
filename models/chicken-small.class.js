@@ -3,7 +3,7 @@
  */
 class ChickenSmall extends Chicken {
 
-    y = 370;
+    y = 380;
     height = 50;
     width = 60;
 
