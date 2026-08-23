@@ -4,25 +4,26 @@
 class World {
 
     character = new Character();
-
     level = level1;
-
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
+
     statusBarHealth = new StatusBar(40, 0, 'health');
     statusBarCoin = new StatusBar(40, 50, 'coin');
     statusBarBottle = new StatusBar(40, 100, 'bottle');
     statusBarEndboss = new StatusBar(480, 8, 'endboss');
     throwableObjects = [];
-    gameWon = false;
+    lastThrowTime = 0;
+    throwCooldownMs = 1500;
 
     collectedBottles = 0;
     totalBottles = 0;
     collectedCoins = 0;
     totalCoins = 0;
 
+    gameWon = false;
     gameLost = false;
     gameLostTriggered = false;
 
@@ -85,16 +86,16 @@ class World {
      * Creates a throwable bottle when the player presses the throw key.
      */
     checkThrowObjects() {
-        if (this.keyboard.SPACE && this.collectedBottles > 0 && !this.throwCooldown) {
+        let now = Date.now();
+        if (this.keyboard.SPACE 
+            && this.collectedBottles > 0 
+            && now - this.lastThrowTime >= this.throwCooldownMs) {
             let direction = this.character.otherDirection ? 'left' : 'right';
             let offsetX = this.character.otherDirection ? -30 : 100;
             let bottle = new ThrowableObject(this.character.x + offsetX, this.character.y + 100, direction);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
-            this.throwCooldown = true;
-        }
-        if (!this.keyboard.SPACE) {
-            this.throwCooldown = false;
+            this.lastThrowTime = now;
         }
     }
 

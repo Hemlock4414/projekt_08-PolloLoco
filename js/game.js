@@ -136,6 +136,20 @@ function restart() {
 }
 
 /**
+ * Restarts the game immediately without returning to the start screen.
+ *
+ * Stops the current World instance, reinitializes the level,
+ * and creates a fresh World instance.
+ */
+function tryAgain() {
+    document.getElementById('hudControls-topLeft').style.display = 'none';
+    if (world) world.stop();
+    world = null;
+    initLevel();
+    world = new World(canvas, keyboard);
+}
+
+/**
  * Toggles the sound on or off.
  *
  * Updates the mute button icon accordingly.
