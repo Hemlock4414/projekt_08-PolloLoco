@@ -364,6 +364,9 @@ canvas {
     .hud-corner.bottom-right button {
       padding: 8px;
     }
+    .controls-info {
+      display: none;
+    }
     /* Small devices */
     @media (max-height: 450px) {
       .mobile-btn {
