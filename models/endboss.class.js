@@ -10,8 +10,8 @@ class Endboss extends MovableObject {
     y = 60;
 
     energy = 100;
-    speed = 4;
-    damage = 25;
+    speed = 5;
+    damage = 20;
 
     alertRange = 500;
     attackRange = 250;

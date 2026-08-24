@@ -75,7 +75,7 @@ class MovableObject extends DrawableObject {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
         if (timePassed > 1) {
-            this.energy -= 5;
+            this.energy -= 10;
             if(this.energy < 0) {
                 this.energy = 0;
             }

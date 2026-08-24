@@ -16,7 +16,7 @@ class World {
     statusBarEndboss = new StatusBar(480, 58, 'endboss');
     throwableObjects = [];
     lastThrowTime = 0;
-    throwCooldownMs = 1500;
+    throwCooldownMs = 2000;
 
     collectedBottles = 0;
     totalBottles = 0;
