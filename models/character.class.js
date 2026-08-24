@@ -29,6 +29,10 @@ class Character extends MovableObject {
     wasHurt = false;
     wasDead = false;
     wasIdleLong = false;
+    wasAboveGround = false;
+    jumpAnimationCounter = 0;
+    jumpFrameIndex = 0;
+    JUMP_ANIMATION_SPEED = 5;
 
     IMAGES_WALKING = [
         'assets/img/2_character_pepe/2_walk/W-21.png',
@@ -196,6 +200,7 @@ class Character extends MovableObject {
         }
 
         this.wasDead = true;
+        this.wasAboveGround = false;
     }
 
     /**
@@ -215,13 +220,18 @@ class Character extends MovableObject {
         }
 
         this.wasHurt = true;
+        this.wasAboveGround = false;
     }
 
     /**
      * Handles the character's jumping animation.
      */
     handleJumpAnimation() {
-        this.playAnimation(this.IMAGES_JUMPING);
+        if (!this.wasAboveGround) {
+            this.jumpAnimationCounter = 0;
+            this.jumpFrameIndex = 0;
+        }
+        this.playJumpAnimation();
 
         this.stopWalkingSound();
         this.stopIdleLongSound();
@@ -229,6 +239,7 @@ class Character extends MovableObject {
         this.wasIdleLong = false;
         this.wasHurt = false;
         this.wasDead = false;
+        this.wasAboveGround = true;
         this.lastMoveTime = Date.now();
     }
 
@@ -245,6 +256,7 @@ class Character extends MovableObject {
 
         this.wasHurt = false;
         this.wasDead = false;
+        this.wasAboveGround = false;
     }
 
     /**
@@ -276,6 +288,7 @@ class Character extends MovableObject {
         }
 
         this.wasIdleLong = true;
+        this.wasAboveGround = false;
     }
 
     /**
@@ -286,6 +299,21 @@ class Character extends MovableObject {
 
         this.stopIdleLongSound();
         this.wasIdleLong = false;
+        this.wasAboveGround = false;
+    }
+
+    /**
+     * Plays the jump animation once per jump, frame by frame,
+     * starting fresh at the beginning of each jump and holding
+     * the last frame until landing.
+     */
+    playJumpAnimation() {
+        this.jumpAnimationCounter++;
+        if (this.jumpAnimationCounter % this.JUMP_ANIMATION_SPEED !== 0) return;
+        if (this.jumpFrameIndex < this.IMAGES_JUMPING.length) {
+            this.img = this.imageCache[this.IMAGES_JUMPING[this.jumpFrameIndex]];
+            this.jumpFrameIndex++;
+        }
     }
 
     /**
