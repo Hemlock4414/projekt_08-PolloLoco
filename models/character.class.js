@@ -349,4 +349,15 @@ class Character extends MovableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
+
+    /**
+     * Registers player activity: resets the idle timer and stops
+     * the long idle sound/state. Call this from any action that
+     * should count as "not idle", even if it has no own animation.
+     */
+    registerActivity() {
+        this.lastMoveTime = Date.now();
+        this.stopIdleLongSound();
+        this.wasIdleLong = false;
+    }
 }

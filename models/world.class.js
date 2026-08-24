@@ -87,8 +87,8 @@ class World {
      */
     checkThrowObjects() {
         let now = Date.now();
-        if (this.keyboard.SPACE 
-            && this.collectedBottles > 0 
+        if (this.keyboard.SPACE
+            && this.collectedBottles > 0
             && now - this.lastThrowTime >= this.throwCooldownMs) {
             let direction = this.character.otherDirection ? 'left' : 'right';
             let offsetX = this.character.otherDirection ? -30 : 100;
@@ -96,6 +96,7 @@ class World {
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
             this.lastThrowTime = now;
+            this.character.registerActivity();
         }
     }
 

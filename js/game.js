@@ -19,8 +19,26 @@ function init() {
     soundMuted = localStorage.getItem('soundMuted') !== 'false';
     soundtrack.muted = soundMuted;
     updateMuteIcon();
-    soundtrack.play().catch(() => {});
+    bindAutoplayUnlock();
     keyboard.bindMobileControls();
+}
+
+/**
+ * Starts the soundtrack automatically after the first click or
+ * key press after loading, if the sound is not muted.
+ * Necessary because browsers may block autoplay with sound without
+ * a user interaction.
+ */
+function bindAutoplayUnlock() {
+    function startOnInteraction() {
+        if (!soundMuted && soundtrack.paused) {
+            soundtrack.play().catch(() => {});
+        }
+        document.removeEventListener('click', startOnInteraction);
+        document.removeEventListener('keydown', startOnInteraction);
+    }
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('keydown', startOnInteraction);
 }
 
 /**
