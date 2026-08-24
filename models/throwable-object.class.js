@@ -7,7 +7,7 @@ class ThrowableObject extends MovableObject {
     isSplashing = false;
     hasHit = false;
 
-    splash_sound = new Audio('audio/bottle-smash.mp3');
+    splash_sound = new Audio('assets/audio/bottle-smash.mp3');
 
     IMAGES_ROTATION = [
         'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -33,7 +33,7 @@ class ThrowableObject extends MovableObject {
      * @param {'left'|'right'} direction - The throwing direction.
      */
     constructor(x, y, direction = 'right') {
-        super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
+        super().loadImage('assets/img/6_salsa_bottle/salsa_bottle.png');
 
         this.loadImages(this.IMAGES_ROTATION);
         this.loadImages(this.IMAGES_SPLASH);
