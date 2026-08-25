@@ -98,7 +98,7 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             this.handleAnimation();
-        }, 150);
+        }, 50);
     }
 
     /**
@@ -177,7 +177,7 @@ class Endboss extends MovableObject {
                 clearInterval(alertInterval);
                 this.isMoving = true;
             }
-        }, 150);
+        }, 80);
     }
 
     /**
