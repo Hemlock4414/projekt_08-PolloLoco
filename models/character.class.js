@@ -132,17 +132,20 @@ class Character extends MovableObject {
      * Handles character movement based on keyboard input.
      */
     handleMovement() {
-        if (!this.world) return;
+        if (!this.world || this.isDead()) return;
+
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
             this.otherDirection = false;
             this.startWalkingSound();
         }
+
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true;
             this.startWalkingSound();
         }
+
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump();
             playSound(this.jump_sound);
