@@ -7,6 +7,7 @@ let soundtrack = new Audio('assets/audio/soft-mexican-guitar.mp3');
 soundtrack.loop = true;
 soundtrack.muted = true;
 let soundMuted = true;
+let activeSounds = [];
 
 /**
  * Initializes the game.
@@ -151,6 +152,10 @@ function restart() {
     document.getElementById('hudControls-topLeft').style.display = 'none';
     document.getElementById('startScreen').style.display = 'flex';
     document.getElementById('mobileControls').classList.remove('game-active');
+
+    stopAllSounds();
+    activeSounds = [];
+
     if (world) world.stop();
     world = null;
 }
@@ -163,6 +168,10 @@ function restart() {
  */
 function tryAgain() {
     document.getElementById('hudControls-topLeft').style.display = 'none';
+
+    stopAllSounds();
+    activeSounds = [];
+
     if (world) world.stop();
     world = null;
     initLevel();
@@ -172,16 +181,34 @@ function tryAgain() {
 /**
  * Toggles the sound on or off.
  *
- * Updates the mute button icon accordingly.
+ * Stops all currently active sound effects when muted
+ * and resumes the soundtrack when sound is enabled again.
+ * Updates the mute button icon and saves the mute state.
  */
 function toggleMute() {
     soundMuted = !soundMuted;
     soundtrack.muted = soundMuted;
-    localStorage.setItem('soundMuted', soundMuted);
-    if (!soundMuted && soundtrack.paused) {
+
+    if (soundMuted) {
+        stopAllSounds();
+    } else if (soundtrack.paused) {
         soundtrack.play().catch(() => {});
     }
+    localStorage.setItem('soundMuted', soundMuted);
     updateMuteIcon();
+}
+
+/**
+ * Stops all currently active sound effects immediately.
+ *
+ * Pauses each audio element and resets its playback position
+ * to the beginning.
+ */
+function stopAllSounds() {
+    activeSounds.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
 }
 
 /**
@@ -196,14 +223,20 @@ function updateMuteIcon() {
 /**
  * Plays a sound if sound is not muted.
  *
- * Resets the playback position to the beginning before playing.
+ * Resets the playback position to the beginning before playing
+ * and adds the audio element to the list of active sounds.
  *
  * @param {HTMLAudioElement} audio - The audio element to play.
  */
 function playSound(audio) {
     if (soundMuted) return;
+
     audio.currentTime = 0;
     audio.play().catch(() => {});
+
+    if (!activeSounds.includes(audio)) {
+        activeSounds.push(audio);
+    }
 }
 
 /**
