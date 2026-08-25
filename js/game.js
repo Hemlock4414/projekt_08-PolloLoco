@@ -233,3 +233,24 @@ function openLegalDialog() {
 function closeLegalDialog() {
     document.getElementById('legalDialog').close();
 }
+
+/**
+ * Closes a dialog when the user clicks outside its rendered box
+ * (i.e. on the backdrop), but not when clicking inside the dialog
+ * itself — including its padding area.
+ *
+ * @param {string} dialogId - The id of the <dialog> element.
+ */
+function bindDialogOutsideClick(dialogId) {
+    const dialog = document.getElementById(dialogId);
+    dialog.addEventListener('click', (e) => {
+        const rect = dialog.getBoundingClientRect();
+        const clickedOutside =
+            e.clientX < rect.left || e.clientX > rect.right ||
+            e.clientY < rect.top || e.clientY > rect.bottom;
+        if (clickedOutside) dialog.close();
+    });
+}
+
+bindDialogOutsideClick('controlsDialog');
+bindDialogOutsideClick('legalDialog');

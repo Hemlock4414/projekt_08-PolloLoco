@@ -190,6 +190,12 @@ canvas {
     cursor: pointer;
 }
 
+.controls-dialog-close:hover {
+    color: #ffffff;
+    background: rgba(233, 102, 9, 0.8);
+    border-radius: 4px;
+}
+
 .controls-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -243,6 +249,12 @@ canvas {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
+}
+
+.legal-dialog-close:hover {
+    color: #E96609;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
 }
 
 /* Mobile controls */
